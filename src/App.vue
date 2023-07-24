@@ -1,30 +1,36 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import useSearchStore from '@/stores'
+import AzSearch from '@/components/search.vue'
+import {
+  categorizedFilters,
+  defaultPinnedFilterNames,
+  defaultFilterValues
+} from '@/sample/config'
+
+const searchStore = useSearchStore()
+searchStore.init({
+  filters: categorizedFilters,
+  defaultPinnedFilterNames,
+  searchWithQueryStringOnInit: true,
+  defaultFilterValues,
+  allowEmptyFilters: false,
+  searchAfterInit: false,
+  searchAfterFilterChanged: true,
+  historySize: 20,
+  isMinimalMode: false
+})
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="app-content">
+    <az-search class="search" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<style scoped lang="scss">
+.app-content {
+  margin: 0 auto;
+  padding: 2%;
+  max-width: 1200px;
 }
 </style>

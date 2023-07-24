@@ -1,0 +1,10 @@
+// ========== BREAKPOINTS ========== //
+$screen-mobile-width: 576px;
+$screen-tablet-width: 768px;
+$screen-desktop-width: 1024px;
+
+// ========== ELEVATIONS ========== //
+$elevation-property: box-shadow !default;
+$elevation-transition-duration: 280ms !default;
+$animation-standard-curve-timing-function: cubic-bezier(.4, 0, .2, 1) !default;
+$elevation-transition-timing-function: $animation-standard-curve-timing-function !default;
