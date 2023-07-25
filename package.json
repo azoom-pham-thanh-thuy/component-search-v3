@@ -1,13 +1,47 @@
 {
-  "name": "component-search-v3",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@azoom-pham-thanh-thuy/component-search-v3",
+  "private": false,
+  "version": "1.0.0-beta-1",
+  "description": "This repo contains generics search Vue component",
   "author": "Thuy Pham <Siu>",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/component-search-v3.umd.js",
+  "module": "./dist/component-search-v3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/component-search-v3.es.js",
+      "require": "./dist/component-search-v3.umd.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azoom-pham-thanh-thuy/component-search-v3.git"
+  },
+  "homepage": "https://github.com/azoom-pham-thanh-thuy/component-search-v3",
+  "bugs": {
+    "url": "https://github.com/azoom-pham-thanh-thuy/component-search-v3/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "vite",
+    "pinia",
+    "vuetify",
+    "component-search"
+  ],
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lib:publish": "yarn build && yarn publish --access=restricted"
   },
   "dependencies": {
     "date-fns": "^1.30.1",
@@ -20,11 +54,13 @@
   "devDependencies": {
     "@mdi/font": "^7.2.96",
     "@types/lodash": "^4.14.191",
+    "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^4.2.3",
     "qs": "6.9.4",
     "sass": "^1.64.0",
     "typescript": "^5.1.6",
     "vite": "^4.4.5",
+    "vite-plugin-css-injected-by-js": "^3.2.1",
     "vite-plugin-vuetify": "^1.0.2",
     "vue-tsc": "^1.8.5"
   },

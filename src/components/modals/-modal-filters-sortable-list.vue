@@ -99,6 +99,7 @@ function isApplied(filter: Obj) {
   > .filter > .name {
     padding: 10px 0 10px 15px;
     width: 100%;
+    text-align: left;
     &.-applied {
       color: rgb(var(--v-theme-primary));
     }

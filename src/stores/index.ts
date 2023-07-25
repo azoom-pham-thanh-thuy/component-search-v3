@@ -1,5 +1,5 @@
 import { ref, computed, ComputedRef } from 'vue'
-import { defineStore } from 'pinia'
+import { setActivePinia, createPinia, defineStore } from 'pinia'
 import { isEqual, last, get, cloneDeep } from 'lodash'
 import { format } from 'date-fns'
 import { buildConfig } from '@/utils/config'
@@ -15,6 +15,8 @@ import type {
   Preference,
   Config
 } from '@/types'
+
+setActivePinia(createPinia());
 
 export default defineStore('searchStore', () => {
   const settings = ref<Settings>({
@@ -199,15 +201,16 @@ export default defineStore('searchStore', () => {
     }
   }
   async function callSearch({ recordable = true } = {}) {
-    console.log('callSearch')
+    // @ts-ignore
+    console.log('callSearch- this', this)
 
     if (!canSearch.value) return
 
     // @ts-ignore
-    if (typeof search === 'function') {
+    if (typeof this?.search === 'function') {
       runtime.value.searching = true
       // @ts-ignore
-      await search(fixedFilterValues.value)
+      await this.search(fixedFilterValues.value)
       runtime.value.searching = false
     }
     if (!settings.value.isMinimalMode && recordable) {
