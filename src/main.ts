@@ -12,7 +12,9 @@ import useFilterInput from '@/composables/filter-input'
 import useFilterValue from '@/composables/filter-value'
 
 // createApp(App).use(vuetify).use(createPinia()).mount('#app')
-createApp(App).use(vuetify).mount('#app')
+const app = createApp(App)
+app.use(vuetify)
+app.mount('#app')
 
 export {
   AzSearch,

@@ -2,13 +2,15 @@ import {
   FILTER_INPUT_COMPONENTS,
   FILTER_VALUE_COMPONENTS,
   FILTER_ICONS,
-  FILTER_TYPES
+  FILTER_TYPES,
+  MODAL_COMPONENTS
 } from '@/constants/settings'
 
 export type IconKeys = keyof typeof FILTER_ICONS
 export type TypeKeys = keyof typeof FILTER_TYPES
 export type InputCompKeys = keyof typeof FILTER_INPUT_COMPONENTS
 export type ValueCompKeys = keyof typeof FILTER_VALUE_COMPONENTS
+export type ModalComponentKeys = keyof typeof MODAL_COMPONENTS
 
 export type InputType = null | string | { [key: string]: any } | Array<number>
 

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings, runtime, pinnedFilters } = storeToRefs(searchStore)
 </script>
 
@@ -13,8 +14,8 @@ const { settings, runtime, pinnedFilters } = storeToRefs(searchStore)
       :key="filter.name"
       class="filter-wrapper"
     >
-      <v-chip class="filter" @click="searchStore.showFilter(filter.name)">
-        <v-icon :icon="filter.icon" size="x-small" class="icon" />
+      <v-chip color="primary" class="filter" @click="searchStore.showFilter(filter.name)">
+        <v-icon size="x-small" class="icon" :icon="filter.icon" />
         <span class="label">
           {{ filter.label }}
           <b v-if="filter.allowSingleSearch">*</b>
@@ -66,7 +67,7 @@ const { settings, runtime, pinnedFilters } = storeToRefs(searchStore)
     opacity: 0.6;
     transform: rotate(45deg);
     cursor: default;
-    background-color: #6200ee;
+    background-color: rgb(var(--v-theme-primary, #6200ee));
     -webkit-mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAyaDEwdjJsLTIgMXY1bDMgM3YzaC01djRsLTEgM2wtMS0zdi00SDZ2LTNsMy0zVjVMNyA0VjJ6bTYgMmgtMnY2LjgyOGwtMyAzVjE0aDh2LS4xNzJsLTMtM1Y0eiIvPjwvc3ZnPg==')
       no-repeat center center;
     -webkit-mask-size: cover;

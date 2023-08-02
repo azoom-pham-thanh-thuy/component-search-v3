@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import qs from 'qs'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
@@ -11,7 +11,7 @@ defineProps({
   }
 })
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings } = storeToRefs(searchStore)
 const message = ref('')
 const tooltip = ref<null | { [key: string]: number }>(null)
@@ -55,6 +55,7 @@ function copyLinkToClipboard(filterValues: object) {
       icon="mdi-link"
       variant="text"
       density="comfortable"
+      color="primary"
       class="button -copylink material-icons"
       @click="copySearchCondition($event, value)"
     >

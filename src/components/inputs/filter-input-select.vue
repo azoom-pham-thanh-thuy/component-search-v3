@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import FilterInput from '@/components/utils/filter-input.vue'
 import useFilterInput from '@/composables/filter-input'
 
-const { filter, inputValue, internalValue } = useFilterInput()
+const { filter, inputValue, internalValue } = useFilterInput(inject('storeId'))
 </script>
 
 <template>

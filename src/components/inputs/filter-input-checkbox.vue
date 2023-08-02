@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue'
+import { computed, ComputedRef, inject } from 'vue'
 import FilterInput from '@/components/utils/filter-input.vue'
 import useFilterInput from '@/composables/filter-input'
 import type { Obj } from '@/types'
 
-const { filter, inputValue, internalValue } = useFilterInput()
+const { filter, inputValue, internalValue } = useFilterInput(inject('storeId'))
 
 const inputVal = computed({
   get: () => inputValue.value ?? [],
@@ -59,7 +59,12 @@ function toggleAllCheck() {
         </label>
       </div>
       <div v-if="options.checkAllEnabled" class="actions">
-        <v-btn variant="text" class="button" @click="toggleAllCheck">
+        <v-btn
+          variant="text"
+          color="primary"
+          class="button"
+          @click="toggleAllCheck"
+        >
           {{ allCheckButtonLabel }}
         </v-btn>
       </div>

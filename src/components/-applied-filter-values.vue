@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { orderBy } from 'lodash'
 import CopyButton from '@/components/utils/copy-button.vue'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings, runtime, appliedFilters } = storeToRefs(searchStore)
 
 const sortedAppliedFilters = computed(() =>

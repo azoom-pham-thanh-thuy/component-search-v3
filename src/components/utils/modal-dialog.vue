@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import useSearchStore from '@/stores'
 
 withDefaults(defineProps<{ icon: string }>(), {
   icon: ''
 })
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 </script>
 
 <template>
@@ -37,7 +38,7 @@ const searchStore = useSearchStore()
   position: absolute;
   z-index: 9;
   border-radius: 4px;
-  background-color: rgb(var(--v-theme-white));
+  background-color: #fff;
   box-sizing: border-box;
   > .header {
     display: flex;

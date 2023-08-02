@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, useSlots, useAttrs } from 'vue'
+import { ref, computed, useSlots, useAttrs, inject } from 'vue'
 import { propOptions } from '@/composables/filter-value'
 import Preset from '@/utils/Preset'
 import useSearchStore from '@/stores'
@@ -8,7 +8,7 @@ import { Obj } from '@/types'
 const props = defineProps({ ...propOptions })
 const slots = useSlots()
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const tooltip = ref<null | Obj<number>>(null)
 const tooltipShown = computed(() => {
   if (!slots.tooltip) return false
@@ -43,6 +43,7 @@ function hideTooltip() {
   <div class="filter-value">
     <v-chip
       variant="outlined"
+      color="primary"
       :closable="closeable"
       :class="['filter-chip', { '-highlighted': highlighted }]"
       @click="editFilter"

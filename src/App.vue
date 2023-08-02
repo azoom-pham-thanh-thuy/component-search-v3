@@ -7,7 +7,8 @@ import {
   defaultFilterValues
 } from '@/sample/config'
 
-const searchStore = useSearchStore()
+const storeId = 'azSearchStore'
+const searchStore = useSearchStore(storeId)
 searchStore.init({
   filters: categorizedFilters,
   defaultPinnedFilterNames,
@@ -23,7 +24,7 @@ searchStore.init({
 
 <template>
   <div class="app-content">
-    <az-search class="search" />
+    <az-search class="search" :store-id="storeId" />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
+import { computed, inject, PropType } from 'vue'
 import { storeToRefs } from 'pinia'
 import { cloneDeep } from 'lodash'
 import useSearchStore from '@/stores'
@@ -14,7 +14,7 @@ const props = defineProps({
   }
 })
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { selectedFilter: filter, runtime } = storeToRefs(searchStore)
 
 const addButtonLabel = computed(() => {
@@ -61,6 +61,7 @@ function searchWithThis() {
         <v-btn
           v-if="filter?.allowSingleSearch"
           class="button -search"
+          color="primary"
           :disabled="!canApply"
           @click="searchWithThis"
         >
@@ -69,6 +70,7 @@ function searchWithThis() {
         <v-btn
           class="button -add"
           variant="outlined"
+          color="primary"
           @click="apply"
           :disabled="!canApply"
         >

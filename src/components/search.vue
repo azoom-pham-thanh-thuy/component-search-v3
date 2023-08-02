@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, provide, watch } from 'vue'
 import qs from 'qs'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
@@ -7,19 +7,23 @@ import AppliedFilterValues from '@/components/-applied-filter-values.vue'
 import PinnedFilters from '@/components/-pinned-filters.vue'
 import { MODAL_COMPONENTS } from '@/constants/settings'
 import { decoder } from '@/utils/decoder'
+import { type ModalComponentKeys } from '@/types'
+
+const props = withDefaults(defineProps<{ storeId: string }>(), {
+  storeId: 'searchStore'
+})
 
 const emit = defineEmits<{
   (e: 'filter-change', filterValue: object): void
 }>()
 
-type ModalComponentKeys = keyof typeof MODAL_COMPONENTS
-
-const searchStore = useSearchStore()
-const { settings, runtime, preference, canSearch, pinnedFilters } = storeToRefs(
-  searchStore
-)
+const searchStore = useSearchStore(props.storeId)
+const { settings, runtime, preference, canSearch, pinnedFilters } =
+  storeToRefs(searchStore)
 const {
   showFilters,
+  showBookmarks,
+  showHistory,
   hideModal,
   callSearch,
   toggleCompactView,
@@ -62,6 +66,8 @@ watch(
     }
   }
 )
+
+provide('storeId', props.storeId)
 </script>
 <template>
   <div class="search-component">
@@ -75,6 +81,7 @@ watch(
           <v-btn
             variant="outlined"
             density="comfortable"
+            color="primary"
             class="button -mode"
             :icon="`mdi-unfold-${
               runtime.isCompactView ? 'more' : 'less'
@@ -86,6 +93,7 @@ watch(
             icon="mdi-filter-variant"
             variant="outlined"
             density="comfortable"
+            color="primary"
             class="button -filter"
             @click="showFilters"
           />
@@ -94,28 +102,32 @@ watch(
             icon="mdi-star"
             variant="outlined"
             density="comfortable"
+            color="primary"
             class="button -bookmarks"
-            @click="searchStore.showBookmarks"
+            @click="showBookmarks"
           />
           <v-btn
             v-if="!settings.isMinimalMode"
             icon="mdi-history"
             variant="outlined"
             density="comfortable"
+            color="primary"
             class="button -history"
-            @click="searchStore.showHistory"
+            @click="showHistory"
           />
         </div>
         <div class="actions">
           <v-btn
             icon="mdi-delete"
             variant="text"
+            color="primary"
             class="button -clear"
             :disabled="!canSearch"
             @click="clearFilterValues"
           />
           <v-btn
             class="button -search"
+            color="primary"
             :disabled="!canSearch || runtime.searching"
             @click="callSearch"
           >
@@ -137,6 +149,7 @@ watch(
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  // color: rgb(var(--v-theme-primary));
   > .main {
     display: flex;
     width: 100%;

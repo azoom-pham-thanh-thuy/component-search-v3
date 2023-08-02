@@ -6,8 +6,8 @@ import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 import type { InputType } from '@/types'
 
-export default function useFilterInput() {
-  const searchStore = useSearchStore()
+export default function useFilterInput(storeId: string = 'searchStore') {
+  const searchStore = useSearchStore(storeId)
   const {
     selectedFilter: filter,
     selectedFilterValue: filterValue

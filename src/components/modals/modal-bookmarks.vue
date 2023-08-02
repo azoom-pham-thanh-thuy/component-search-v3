@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import ModalDialog from '@/components/utils/modal-dialog.vue'
 import CopyButton from '@/components/utils/copy-button.vue'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { runtime, preference } = storeToRefs(searchStore)
 
 function searchWith(filterValues: object = {}) {
@@ -33,6 +34,7 @@ function bookmarkCurrent() {
               v-if="bookmark.isDefault"
               icon="mdi-check-circle"
               size="x-small"
+              color="primary"
               class="icon"
             />
           </div>
@@ -41,6 +43,7 @@ function bookmarkCurrent() {
             <v-btn
               variant="outlined"
               size="small"
+              color="primary"
               class="button -edit"
               @click="searchStore.showBookmarkEdit(bookmark)"
             >
@@ -48,6 +51,7 @@ function bookmarkCurrent() {
             </v-btn>
             <v-btn
               size="small"
+              color="primary"
               class="button -search"
               @click="searchWith(bookmark.filterValues)"
             >
@@ -62,6 +66,7 @@ function bookmarkCurrent() {
       <div class="footer">
         <v-btn
           variant="text"
+          color="primary"
           class="button -bookmark-current"
           @click="bookmarkCurrent"
         >

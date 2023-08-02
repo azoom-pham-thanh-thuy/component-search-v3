@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, inject } from 'vue'
 import { get } from 'lodash'
 import { isObject } from '@/utils/app'
 import FilterInput from '@/components/utils/filter-input.vue'
@@ -7,8 +7,7 @@ import Datepicker from '@/components/utils/datepicker.vue'
 import useFilterInput from '@/composables/filter-input'
 import type { InputType } from '@/types'
 
-
-const { inputValue, internalValue } = useFilterInput()
+const { inputValue, internalValue } = useFilterInput(inject('storeId'))
 const dateRange = ref<InputType>({ start: null, end: null })
 
 watch(dateRange, (newRange) => (inputValue.value = newRange), { deep: true })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
+import { computed, inject, PropType } from 'vue'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 import type { Obj } from '@/types'
@@ -19,7 +19,7 @@ const props = defineProps({
   }
 })
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { runtime, preference } = storeToRefs(searchStore)
 
 const sortedFilters = computed<Obj<any>[]>(() => {

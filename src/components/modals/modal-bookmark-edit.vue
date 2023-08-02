@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeMount } from 'vue'
+import { ref, computed, onBeforeMount, inject } from 'vue'
 import ModalDialog from '@/components/utils/modal-dialog.vue'
 import { get, orderBy } from 'lodash'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
+import { type Filter } from '@/types'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings, runtime } = storeToRefs(searchStore)
 
 const name = ref<string>('')
@@ -41,7 +42,7 @@ function withFilter(filterValues: object = {}) {
   return orderBy(
     Object.entries(filterValues).map(([filterName, filterValue]) => {
       const filter = settings.value.filters.find(
-        (filter) => filter.name === filterName
+        (filter: Filter) => filter.name === filterName
       )
       return { filter, filterValue }
     }),
@@ -81,6 +82,7 @@ function withFilter(filterValues: object = {}) {
         <v-btn
           v-if="!isNewBookmark"
           variant="text"
+          color="primary"
           class="btn -remove"
           :disabled="bookmark.isDefault"
           @click="saveAsDefault"
@@ -90,12 +92,19 @@ function withFilter(filterValues: object = {}) {
         <v-btn
           v-if="!isNewBookmark"
           variant="text"
+          color="primary"
           class="btn -remove"
           @click="remove"
         >
           削除
         </v-btn>
-        <v-btn variant="outlined" class="btn -save" @click="save">保存</v-btn>
+        <v-btn
+          variant="outlined"
+          color="primary"
+          class="btn -save"
+          @click="save"
+          >保存</v-btn
+        >
       </div>
     </div>
   </modal-dialog>

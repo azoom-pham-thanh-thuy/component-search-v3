@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, computed, ComputedRef, watch } from 'vue'
+import { ref, onBeforeMount, computed, ComputedRef, watch, inject } from 'vue'
 import { head } from 'lodash'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   sortType: 'default'
 })
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings, runtime } = storeToRefs(searchStore)
 
 const activeCategory = ref<string | null | undefined>(null)

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import ModalDialog from '@/components/utils/modal-dialog.vue'
 import CategorizedView from '@/components/modals/-modal-filters-categorized-view.vue'
 import SortableList from '@/components/modals/-modal-filters-sortable-list.vue'
@@ -7,7 +7,7 @@ import { SORT_ICONS } from '@/constants/settings'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings, categoryEnabled } = storeToRefs(searchStore)
 
 type IconKeys = keyof typeof SORT_ICONS
@@ -25,7 +25,9 @@ function iconOf(sortType: IconKeys) {
     <template v-slot:header>
       <v-form class="form-field -search">
         <v-text-field
+          hide-details
           variant="filled"
+          density="compact"
           label="項目を検索"
           bg-color="white"
           class="input -outlined"

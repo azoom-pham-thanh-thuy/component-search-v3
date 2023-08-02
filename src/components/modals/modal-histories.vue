@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { orderBy } from 'lodash'
 import { format, parse } from 'date-fns'
 import ModalDialog from '@/components/utils/modal-dialog.vue'
@@ -8,7 +8,7 @@ import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
 import { Obj } from '@/types'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { settings, preference } = storeToRefs(searchStore)
 
 const sortedHistories = computed<Obj<any>[]>(() => {
@@ -74,6 +74,7 @@ function formatTimestamp(timestamp: string) {
             <v-btn
               variant="outlined"
               size="small"
+              color="primary"
               class="button -bookmark"
               @click="addToBookmarks(history.filterValues)"
             >
@@ -81,6 +82,7 @@ function formatTimestamp(timestamp: string) {
             </v-btn>
             <v-btn
               size="small"
+              color="primary"
               class="button -search"
               @click="searchWith(history.filterValues)"
             >

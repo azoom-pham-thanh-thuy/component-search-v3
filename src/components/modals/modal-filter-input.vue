@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { inject } from 'vue'
 import ModalDialog from '@/components/utils/modal-dialog.vue'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
 
-const searchStore = useSearchStore()
+const searchStore = useSearchStore(inject('storeId'))
 const { selectedFilter } = storeToRefs(searchStore)
 </script>
 

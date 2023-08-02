@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import FilterInput from '@/components/utils/filter-input.vue'
 import Autocomplete from '@/components/utils/autocomplete.vue'
 import useFilterInput from '@/composables/filter-input'
 
-const { inputValue, internalValue, filter } = useFilterInput()
+const { inputValue, internalValue, filter } = useFilterInput(inject('storeId'))
 
 const initLabel = computed(() => {
   const item = filter.value.items.find(

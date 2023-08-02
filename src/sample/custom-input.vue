@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { get } from 'lodash'
 import { AzFilterInput, useFilterInput } from '@/main'
 import { isObject } from '@/utils/app'
 
-const { inputValue, internalValue, filter } = useFilterInput()
+const { inputValue, internalValue, filter } = useFilterInput(inject('storeId'))
 
 const inputVal = computed({
   get: () => {

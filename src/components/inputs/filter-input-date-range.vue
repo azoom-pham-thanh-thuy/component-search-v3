@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { get } from 'lodash'
 import FilterInput from '@/components/utils/filter-input.vue'
 import Datepicker from '@/components/utils/datepicker.vue'
@@ -19,7 +19,7 @@ const {
   internalValue,
   isSelectedPreset,
   togglePreset
-} = useFilterInput()
+} = useFilterInput(inject('storeId'))
 
 const dateRange = computed({
   get: () => {
