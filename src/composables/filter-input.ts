@@ -1,4 +1,3 @@
-import { ref, watch, nextTick, onBeforeMount } from 'vue'
 import { cloneDeep } from 'lodash'
 import { isObject } from '@/utils/app'
 import Preset from '@/utils/Preset'
@@ -6,8 +5,8 @@ import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 import type { InputType } from '@/types'
 
-export default function useFilterInput(storeId: string = 'searchStore') {
-  const searchStore = useSearchStore(storeId)
+export default function useFilterInput(storeId: string) {
+  const searchStore = useSearchStore(storeId || 'searchStore')
   const {
     selectedFilter: filter,
     selectedFilterValue: filterValue
@@ -15,7 +14,7 @@ export default function useFilterInput(storeId: string = 'searchStore') {
 
   const inputValue = ref<InputType>(null)
   const internalValue = ref<InputType>(null)
-  const internalPreset = ref<InputType>(null)
+  const internalPreset = ref<null | Preset>(null)
 
   onBeforeMount(() => {
     const watchStart = () => {
@@ -30,7 +29,7 @@ export default function useFilterInput(storeId: string = 'searchStore') {
     }
 
     if (Preset.isPreset(filterValue.value)) {
-      inputValue.value = filter.value?.presetValueOf(filterValue.value)
+      inputValue.value = filter.value.presetValueOf?.(filterValue.value) ?? null
       internalPreset.value = filterValue.value
       internalValue.value = filterValue.value
       watchStart()
@@ -54,7 +53,7 @@ export default function useFilterInput(storeId: string = 'searchStore') {
     watchStart()
   })
 
-  function togglePreset(preset: unknown) {
+  function togglePreset(preset: Preset) {
     if (isSelectedPreset(preset)) {
       unselectePreset()
     } else {
@@ -62,7 +61,7 @@ export default function useFilterInput(storeId: string = 'searchStore') {
     }
   }
 
-  function selectPreset(preset: any) {
+  function selectPreset(preset: Preset) {
     inputValue.value = preset.create()
     nextTick(() => {
       internalValue.value = preset
@@ -75,11 +74,10 @@ export default function useFilterInput(storeId: string = 'searchStore') {
     internalValue.value = inputValue.value
   }
 
-  function isSelectedPreset(preset: unknown) {
+  function isSelectedPreset(preset: Preset) {
     return (
       isObject(internalPreset.value) &&
-      // @ts-ignore
-      internalPreset.value.name === preset.name
+      internalPreset.value?.name === preset.name
     )
   }
 

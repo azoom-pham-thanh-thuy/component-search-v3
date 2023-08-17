@@ -1,25 +1,20 @@
 <script setup lang="ts">
-import { computed, provide, watch } from 'vue'
 import qs from 'qs'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
-import AppliedFilterValues from '@/components/-applied-filter-values.vue'
-import PinnedFilters from '@/components/-pinned-filters.vue'
+import { AppliedFilterValues, PinnedFilters } from '@/components'
 import { MODAL_COMPONENTS } from '@/constants/settings'
 import { decoder } from '@/utils/decoder'
 import { type ModalComponentKeys } from '@/types'
 
-const props = withDefaults(defineProps<{ storeId: string }>(), {
-  storeId: 'searchStore'
-})
+const props = defineProps<{ storeId: string }>()
 
 const emit = defineEmits<{
   (e: 'filter-change', filterValue: object): void
 }>()
 
 const searchStore = useSearchStore(props.storeId)
-const { settings, runtime, preference, canSearch, pinnedFilters } =
-  storeToRefs(searchStore)
+const { settings, runtime, preference, canSearch } = storeToRefs(searchStore)
 const {
   showFilters,
   showBookmarks,
@@ -28,7 +23,7 @@ const {
   callSearch,
   toggleCompactView,
   clearFilterValues,
-  updateFilterValues
+  updateFilterValues,
 } = searchStore
 
 const modalComponent = computed(
@@ -42,7 +37,7 @@ const searchButtonText = computed(() =>
 
 watch(
   () => preference.value.initialized,
-  (bool) => {
+  (bool: boolean) => {
     if (bool) {
       if (settings.value.searchAfterInit) {
         callSearch({ recordable: false })
@@ -51,18 +46,21 @@ watch(
         const condition = qs.parse(location.search, {
           ignoreQueryPrefix: true,
           decoder
-        })
+        })        
         updateFilterValues(condition)
         callSearch()
         history.replaceState(null, '', location.pathname)
       }
 
-      watch(runtime.value.filterValues, () => {
-        emit('filter-change', runtime.value.filterValues)
-        if (settings.value.searchAfterFilterChanged) {
-          callSearch()
+      watch(
+        () => runtime.value.filterValues,
+        () => {
+          emit('filter-change', runtime.value.filterValues)
+          if (settings.value.searchAfterFilterChanged) {
+            callSearch()
+          }
         }
-      })
+      )
     }
   }
 )
@@ -208,10 +206,14 @@ provide('storeId', props.storeId)
   > .actions {
     display: flex;
     justify-content: space-between;
+    column-gap: 6px;
     margin: 3px 0;
   }
   > .actions > .button.-search {
-    padding: 0 23.5px;
+    flex: 1;
+    @include screen-mobile {
+      min-width: 85px;
+    }
   }
   > .actions > .button.-clear {
     --v-btn-height: 24px;

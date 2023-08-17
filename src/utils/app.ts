@@ -18,6 +18,12 @@ export function isEmptyValue(value: any): boolean {
 }
 
 export function generateRandomString(length: number): string {
-  const baseNumber = 2
-  return Math.random().toString(36).slice(baseNumber, baseNumber + length)
+  let result = ''
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charactersLength = characters.length
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+  return result
 }

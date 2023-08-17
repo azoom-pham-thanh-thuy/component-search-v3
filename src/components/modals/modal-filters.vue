@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { inject, ref } from 'vue'
-import ModalDialog from '@/components/utils/modal-dialog.vue'
-import CategorizedView from '@/components/modals/-modal-filters-categorized-view.vue'
-import SortableList from '@/components/modals/-modal-filters-sortable-list.vue'
+import { ModalDialog, CategorizedView, SortableList } from '@/components'
 import { SORT_ICONS } from '@/constants/settings'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { settings, categoryEnabled } = storeToRefs(searchStore)
 
 type IconKeys = keyof typeof SORT_ICONS

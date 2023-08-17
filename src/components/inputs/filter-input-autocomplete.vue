@@ -1,20 +1,9 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
-import FilterInput from '@/components/utils/filter-input.vue'
-import Autocomplete from '@/components/utils/autocomplete.vue'
+import { FilterInput, Autocomplete } from '@/components'
 import useFilterInput from '@/composables/filter-input'
+import type { FilterItem } from '@/types'
 
-const { inputValue, internalValue, filter } = useFilterInput(inject('storeId'))
-
-const initLabel = computed(() => {
-  const item = filter.value.items.find(
-    (item: any) => item.value === inputValue.value
-  )
-  if (item && item.label) {
-    return item.label
-  }
-  return null
-})
+const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 </script>
 
 <template>
@@ -26,7 +15,7 @@ const initLabel = computed(() => {
         display-key="label"
         identify-key="label"
         :placeholder="filter.label"
-        :suggestions="filter.items"
+        :suggestions="(filter.items as FilterItem[])"
       />
     </div>
   </filter-input>

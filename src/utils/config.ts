@@ -1,9 +1,10 @@
+import type { Component } from 'vue'
 import { flatten } from 'lodash'
 import {
   FILTER_INPUT_COMPONENTS,
   FILTER_VALUE_COMPONENTS,
   FILTER_ICONS,
-  FILTER_TYPES
+  FILTER_TYPES,
 } from '@/constants/settings'
 import Preset from '@/utils/Preset'
 import type {
@@ -13,13 +14,14 @@ import type {
   ValueCompKeys,
   Obj,
   Filter,
-  Config
+  Config,
+  PresetArgs,
 } from '@/types'
 
 export const buildConfig = async (config: Config) => {
   if (!Array.isArray(config.filters)) {
     config.categorizedFilters = config.filters
-    config.filters = flatten(Object.values(config.filters)) as Filter[]
+    config.filters = flatten(Object.values(config.filters))
   }
   await Promise.all(
     config.filters.map(async (filter: Filter) => {
@@ -50,10 +52,15 @@ export const buildConfig = async (config: Config) => {
       }
 
       // filter type
-      let type: Obj<any> = {}
+      let type: {
+        input?: Component
+        value?: Component
+        presets?: PresetArgs[]
+      } = {}
+
       if (typeof filter.type === 'string') {
         type = FILTER_TYPES[filter.type as TypeKeys]
-      } else {
+      } else {        
         type.input =
           typeof filter.type.input === 'string'
             ? FILTER_INPUT_COMPONENTS[filter.type.input as InputCompKeys]
@@ -67,21 +74,23 @@ export const buildConfig = async (config: Config) => {
         input: () => type.input,
         value: () => type.value,
         presets: type.presets
-          ? type.presets.map(
-              (preset: string | Obj<string>) => new Preset(preset)
-            )
-          : null
+          ? type.presets.map((preset) => new Preset(preset))
+          : null,
       }
-
+      
       filter.presetValueOf = type.presets
         ? (value) => {
-            const preset = type.presets.find((p: Obj) => p.name === value?.name)
+            const preset = type.presets?.find(
+              ({ name }) => name === value?.name
+            )
             return preset ? preset.create() : null
           }
         : () => null
       filter.presetLabelOf = type.presets
         ? (value) => {
-            const preset = type.presets.find((p: Obj) => p.name === value?.name)
+            const preset = type.presets?.find(
+              ({ name }) => name === value?.name
+            )
             return preset ? preset.label : null
           }
         : () => null

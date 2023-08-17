@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeMount, inject } from 'vue'
-import ModalDialog from '@/components/utils/modal-dialog.vue'
+import { ModalDialog } from '@/components'
 import { get, orderBy } from 'lodash'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
 import { type Filter } from '@/types'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { settings, runtime } = storeToRefs(searchStore)
 
 const name = ref<string>('')
@@ -69,7 +68,7 @@ function withFilter(filterValues: object = {}) {
         >
           <component
             v-if="filter"
-            :is="typeof filter.type == 'object' && filter.type.value()"
+            :is="typeof filter.type == 'object' && (filter.type.value as Function)()"
             :editable="false"
             :closeable="false"
             :filter="filter"

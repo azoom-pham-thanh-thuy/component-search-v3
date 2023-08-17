@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject } from 'vue'
-import FilterInput from '@/components/utils/filter-input.vue'
+import { FilterInput } from '@/components'
 import useFilterInput from '@/composables/filter-input'
-import type { Obj } from '@/types'
+import type { CheckboxOptions, FilterItem } from '@/types'
 
-const { filter, inputValue, internalValue } = useFilterInput(inject('storeId'))
+const { filter, inputValue, internalValue } = useFilterInput(inject('storeId')!)
 
 const inputVal = computed({
   get: () => inputValue.value ?? [],
-  set: (val) => (inputValue.value = val)
+  set: (val) => (inputValue.value = val),
 })
 
 const options = computed(() => {
-  return filter.value.options?.inputCheckbox ?? {}
-}) as ComputedRef<Obj<number | boolean>>
+  return (filter.value.options?.inputCheckbox || {}) as CheckboxOptions
+})
+
+const filterItems = computed(() => filter.value.items as FilterItem[])
 
 const isAllChecked = computed(() => {
-  return inputValue.value?.length === filter.value.items.length
+  return (inputValue.value as number[])?.length === filterItems.value.length
 })
 
 const allCheckButtonLabel = computed(() => {
@@ -33,7 +34,7 @@ function toggleAllCheck() {
   if (isAllChecked.value) {
     inputValue.value = []
   } else {
-    inputValue.value = filter.value.items.map(({ value }) => value)
+    inputValue.value = filterItems.value.map(({ value }) => value)
   }
 }
 </script>
@@ -43,7 +44,7 @@ function toggleAllCheck() {
     <div class="filter-checkbox">
       <div class="checkboxes">
         <label
-          v-for="item in filter.items"
+          v-for="item in filterItems"
           :key="item.value"
           class="checkbox-container"
           :style="{ width: widthStyle }"
@@ -51,7 +52,7 @@ function toggleAllCheck() {
           <v-checkbox v-model="inputVal" class="checkbox" :value="item.value">
             <template v-slot:label>
               <div class="label">
-                <v-icon class="icon" :icon="item.icon"></v-icon>
+                <v-icon class="icon" :icon="item.icon" />
                 <span class="value">{{ item.label }}</span>
               </div>
             </template>

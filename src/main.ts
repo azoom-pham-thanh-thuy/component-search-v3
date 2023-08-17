@@ -1,20 +1,28 @@
-import { createApp } from 'vue'
+import { createApp, type App } from 'vue'
 import vuetify from '@/plugins/vuetify'
-// import { createPinia } from 'pinia'
 import AzSearchStore from '@/stores'
 import * as dateUtil from '@/utils/date'
 import { preset } from '@/utils/Preset'
-import App from '@/App.vue'
-import AzSearch from '@/components/search.vue'
-import AzFilterInput from '@/components/utils/filter-input.vue'
-import AzFilterValue from '@/components/utils/filter-value.vue'
+import AppComponent from '@/App.vue'
+import {
+  AzSearch,
+  FilterInput as AzFilterInput,
+  FilterValue as AzFilterValue,
+} from '@/components'
 import useFilterInput from '@/composables/filter-input'
 import useFilterValue from '@/composables/filter-value'
 
-// createApp(App).use(vuetify).use(createPinia()).mount('#app')
-const app = createApp(App)
+const app = createApp(AppComponent)
 app.use(vuetify)
 app.mount('#app')
+
+// export default {
+//   install: (app: App) => {
+//     app.component('AzSearch', AzSearch)
+//     app.component('AzFilterInput', AzFilterInput)
+//     app.component('AzFilterValue', AzFilterValue)
+//   },
+// }
 
 export {
   AzSearch,

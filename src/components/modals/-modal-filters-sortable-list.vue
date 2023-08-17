@@ -1,28 +1,27 @@
 <script setup lang="ts">
-import { computed, inject, PropType } from 'vue'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
-import type { Obj } from '@/types'
+import type { Filter } from '@/types'
 
 const props = defineProps({
   filters: {
-    type: Array as PropType<Obj<any>[]>,
-    default: () => []
+    type: Array as PropType<Filter[]>,
+    default: () => [],
   },
   filterKeyword: {
     type: String,
-    default: ''
+    default: '',
   },
   sortType: {
     type: String,
-    default: 'default'
-  }
+    default: 'default',
+  },
 })
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { runtime, preference } = storeToRefs(searchStore)
 
-const sortedFilters = computed<Obj<any>[]>(() => {
+const sortedFilters = computed<Filter[]>(() => {
   if (props.sortType === 'pinned') {
     return props.filters.slice().sort((filterA, filterB) => {
       const pinnedA = preference.value.pinnedFilterNames.includes(filterA.name)
@@ -41,7 +40,7 @@ const sortedFilters = computed<Obj<any>[]>(() => {
   }
 })
 
-function isApplied(filter: Obj) {
+function isApplied(filter: Filter) {
   return Boolean(
     Object.keys(runtime.value.filterValues).find((name) => filter.name === name)
   )
@@ -55,7 +54,7 @@ function isApplied(filter: Obj) {
       :key="filter.name"
       :class="[
         'filter',
-        { pinned: preference.pinnedFilterNames.includes(filter.name) }
+        { pinned: preference.pinnedFilterNames.includes(filter.name) },
       ]"
       @click="searchStore.showFilter(filter.name)"
     >

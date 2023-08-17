@@ -1,26 +1,26 @@
-import FilterInputTextfield from '@/components/inputs/filter-input-textfield.vue'
-import FilterInputCheckbox from '@/components/inputs/filter-input-checkbox.vue'
-import FilterInputRadio from '@/components/inputs/filter-input-radio.vue'
-import FilterInputSelect from '@/components/inputs/filter-input-select.vue'
-import FilterInputDate from '@/components/inputs/filter-input-date.vue'
-import FilterInputDateRange from '@/components/inputs/filter-input-date-range.vue'
-import FilterInputYearMonth from '@/components/inputs/filter-input-year-month.vue'
-import FilterInputYearMonthRange from '@/components/inputs/filter-input-year-month-range.vue'
-import FilterInputAutocomplete from '@/components/inputs/filter-input-autocomplete.vue'
-
-import FilterValueBoolean from '@/components/values/filter-value-boolean.vue'
-import FilterValueString from '@/components/values/filter-value-string.vue'
-import FilterValueArray from '@/components/values/filter-value-array.vue'
-import FilterValueDate from '@/components/values/filter-value-date.vue'
-import FilterValueDateRange from '@/components/values/filter-value-date-range.vue'
-import FilterValueYearMonth from '@/components/values/filter-value-year-month.vue'
-import FilterValueYearMonthRange from '@/components/values/filter-value-year-month-range.vue'
-
-import ModalFilters from '@/components/modals/modal-filters.vue'
-import ModalFilterInput from '@/components/modals/modal-filter-input.vue'
-import ModalHistories from '@/components/modals/modal-histories.vue'
-import ModalBookmarks from '@/components/modals/modal-bookmarks.vue'
-import ModalBookmarkEdit from '@/components/modals/modal-bookmark-edit.vue'
+import {
+  FilterInputTextfield,
+  FilterInputCheckbox,
+  FilterInputRadio,
+  FilterInputSelect,
+  FilterInputDate,
+  FilterInputDateRange,
+  FilterInputYearMonth,
+  FilterInputYearMonthRange,
+  FilterInputAutocomplete,
+  FilterValueBoolean,
+  FilterValueString,
+  FilterValueArray,
+  FilterValueDate,
+  FilterValueDateRange,
+  FilterValueYearMonth,
+  FilterValueYearMonthRange,
+  ModalFilters,
+  ModalFilterInput,
+  ModalHistories,
+  ModalBookmarks,
+  ModalBookmarkEdit,
+} from '@/components'
 
 import {
   createLastNMonthRange,

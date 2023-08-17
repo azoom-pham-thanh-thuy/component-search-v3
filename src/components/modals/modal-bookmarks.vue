@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-import ModalDialog from '@/components/utils/modal-dialog.vue'
-import CopyButton from '@/components/utils/copy-button.vue'
+import { ModalDialog, CopyButton } from '@/components'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { runtime, preference } = storeToRefs(searchStore)
 
 function searchWith(filterValues: object = {}) {

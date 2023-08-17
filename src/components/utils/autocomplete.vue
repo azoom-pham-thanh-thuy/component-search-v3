@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, PropType } from 'vue'
-import type { InputType } from '@/types'
+import type { InputType, FilterItem } from '@/types'
 
 const props = defineProps({
   modelValue: {
@@ -16,7 +15,7 @@ const props = defineProps({
     required: true
   },
   identifyKey: {
-    type: String,
+    type: String as PropType<keyof FilterItem>,
     required: true
   },
   placeholder: {
@@ -24,7 +23,7 @@ const props = defineProps({
     default: ''
   },
   suggestions: {
-    type: Array,
+    type: Array as PropType<FilterItem[]>,
     required: true
   },
   error: {
@@ -40,13 +39,13 @@ const emit = defineEmits<{
 const selectionSearch = ref<string>('')
 const selection = computed<InputType>({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
+  set: (value) => emit('update:modelValue', value),
 })
 
-const matches = computed<unknown[]>(() => {
-  return props.suggestions.filter((obj: any) => {
-    return obj[props.identifyKey].includes(selectionSearch.value)
-  })
+const matches = computed(() => {
+  return props.suggestions.filter((obj) =>
+    String(obj[props.identifyKey]).includes(selectionSearch.value)
+  )
 })
 </script>
 

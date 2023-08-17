@@ -1,31 +1,30 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, computed, ComputedRef, watch, inject } from 'vue'
 import { head } from 'lodash'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
-import SortableList from '@/components/modals/-modal-filters-sortable-list.vue'
-import type { Obj } from '@/types'
+import { SortableList } from '@/components'
+import type { Obj, Filter } from '@/types'
 
-interface Props {
-  filterKeyword?: string
-  sortType?: string
-}
+const props = withDefaults(
+  defineProps<{ filterKeyword?: string; sortType?: string }>(),
+  {
+    filterKeyword: '',
+    sortType: 'default',
+  }
+)
 
-const props = withDefaults(defineProps<Props>(), {
-  filterKeyword: '',
-  sortType: 'default'
-})
-
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { settings, runtime } = storeToRefs(searchStore)
 
 const activeCategory = ref<string | null | undefined>(null)
 const visibleCategorizedFilters = computed(() => {
-  if (!props.filterKeyword) return settings.value.categorizedFilters
+  if (!props.filterKeyword) {
+    return settings.value.categorizedFilters as Obj<Filter[]>
+  }
   const keywordRegex = new RegExp(props.filterKeyword, 'i')
   const searchByKeyword = (
-    result: Obj,
-    [category, filters]: [string, Obj<string>[]]
+    result: Obj<Filter[]>,
+    [category, filters]: [string, Filter[]]
   ) => {
     const newFilters = filters.filter((filter) => {
       const normalizedLabel = filter.label.replace(/ /g, '').toLowerCase()
@@ -41,7 +40,7 @@ const visibleCategorizedFilters = computed(() => {
     {}
   )
   return result
-}) as ComputedRef<Obj<Obj[]>>
+})
 
 watch(visibleCategorizedFilters, () => {
   selectDefaultCategory()

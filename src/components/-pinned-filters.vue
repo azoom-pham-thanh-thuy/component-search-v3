@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { inject } from 'vue'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { settings, runtime, pinnedFilters } = storeToRefs(searchStore)
 </script>
 

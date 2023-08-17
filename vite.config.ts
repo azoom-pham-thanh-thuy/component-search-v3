@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
+import dts from 'vite-plugin-dts'
 import { fileURLToPath, URL } from 'url'
 import path from 'path'
 // import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
-import pkg from './package.json'
+import AutoImport from 'unplugin-auto-import/vite'
+import pkg from './package.json' assert { type: 'json' }
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,12 +14,17 @@ export default defineConfig({
     vue(),
     vuetify(),
     // cssInjectedByJsPlugin({ topExecutionPriority: false })
+    dts(),
+    AutoImport({
+      imports: ['vue'],
+      dts: './src/auto-imports.d.ts',
+    }),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@root': fileURLToPath(new URL('.', import.meta.url))
-    }
+      '@root': fileURLToPath(new URL('.', import.meta.url)),
+    },
   },
   build: {
     lib: {
@@ -28,12 +35,15 @@ export default defineConfig({
     },
     rollupOptions: {
       // input: {
-      //   main: path.resolve(__dirname, 'src/components/main.ts')
+      //   main: path.resolve(__dirname, 'src/main.ts')
       // },
       external: [...Object.keys(pkg.dependencies || {})],
       output: {
-        // format: 'iife',
-        globals: { vue: 'Vue', vuetify: 'Vuetify' },
+        globals: {
+          vue: 'Vue',
+          vuetify: 'Vuetify',
+          pinia: 'pinia',
+        },
         // assetFileNames: (assetInfo) => (
         //   assetInfo.name == 'style.css' ? 'component-search-v3.css' : assetInfo.name
         // ),

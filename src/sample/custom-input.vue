@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
 import { get } from 'lodash'
 import { AzFilterInput, useFilterInput } from '@/main'
 import { isObject } from '@/utils/app'
 
-const { inputValue, internalValue, filter } = useFilterInput(inject('storeId'))
+const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 
 const inputVal = computed({
   get: () => {
@@ -32,11 +31,11 @@ function isEmptyValue(value: object) {
         <label class="checkbox-container">
           <!-- @vue-ignore -->
           <input
+            v-model="inputVal.fruits"
             type="checkbox"
+            class="checkbox"
             :name="filter.name"
             :value="item.value"
-            v-model="inputVal.fruits"
-            class="checkbox"
           />
           <span class="check-mark"></span>
           {{ item.label }}
@@ -53,11 +52,11 @@ function isEmptyValue(value: object) {
           >
             <!-- @vue-ignore -->
             <input
+              v-model="inputVal.grade"
               type="radio"
               name="grade"
-              :value="grade.value"
-              v-model="inputVal.grade"
               class="radio"
+              :value="grade.value"
             />
             <span class="check-mark"></span>
             {{ grade.label }}
@@ -117,7 +116,7 @@ function isEmptyValue(value: object) {
       top: -4px;
       width: 7px;
       height: 14px;
-      border: solid rgb(var(--v-theme-white));
+      border: solid #fff;
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }
@@ -167,7 +166,7 @@ function isEmptyValue(value: object) {
       top: -4px;
       width: 7px;
       height: 14px;
-      border: solid rgb(var(--v-theme-white));
+      border: solid #fff;
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }

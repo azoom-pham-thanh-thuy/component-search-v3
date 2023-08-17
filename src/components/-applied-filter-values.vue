@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
 import { orderBy } from 'lodash'
-import CopyButton from '@/components/utils/copy-button.vue'
+import { CopyButton } from '@/components'
 import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { settings, runtime, appliedFilters } = storeToRefs(searchStore)
 
 const sortedAppliedFilters = computed(() =>
@@ -31,7 +30,7 @@ const emptyMessage = computed(() =>
         <component
           v-if="filter"
           class="value"
-          :is="typeof filter.type === 'object' && filter.type.value()"
+          :is="typeof filter.type === 'object' && (filter.type.value as Function)()"
           :closeable="!filter.required"
           :editable="true"
           :highlighted="filter.required"

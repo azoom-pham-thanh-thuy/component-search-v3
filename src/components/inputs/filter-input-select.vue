@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-import FilterInput from '@/components/utils/filter-input.vue'
+import { FilterInput } from '@/components'
 import useFilterInput from '@/composables/filter-input'
+import { FilterItem } from '@/types';
 
-const { filter, inputValue, internalValue } = useFilterInput(inject('storeId'))
+const { filter, inputValue, internalValue } = useFilterInput(inject('storeId')!)
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const { filter, inputValue, internalValue } = useFilterInput(inject('storeId'))
         item-title="label"
         item-value="value"
         class="select"
-        :items="filter.items"
+        :items="(filter.items as FilterItem[])"
         :label="filter.label"
       ></v-select>
     </div>

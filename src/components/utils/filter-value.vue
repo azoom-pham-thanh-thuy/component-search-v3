@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, useSlots, useAttrs, inject } from 'vue'
 import { propOptions } from '@/composables/filter-value'
 import Preset from '@/utils/Preset'
 import useSearchStore from '@/stores'
@@ -8,7 +7,7 @@ import { Obj } from '@/types'
 const props = defineProps({ ...propOptions })
 const slots = useSlots()
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const tooltip = ref<null | Obj<number>>(null)
 const tooltipShown = computed(() => {
   if (!slots.tooltip) return false
@@ -59,7 +58,7 @@ function hideTooltip() {
         @mouseleave.stop="hideTooltip"
       >
         <slot v-if="!hasPreset" />
-        <div v-if="hasPreset">[{{ filter.presetLabelOf(value) }}]</div>
+        <div v-if="hasPreset">[{{ filter.presetLabelOf?.(value) }}]</div>
       </div>
     </v-chip>
     <div
@@ -92,8 +91,8 @@ function hideTooltip() {
 .filter-tooltip {
   position: fixed;
   border-radius: 6px;
-  background-color: rgba(var(--v-theme-black), 0.7);
-  color: rgba(var(--v-theme-white), 1);
+  background-color: rgba(#000, 0.7);
+  color: #fff;
   padding: 8px;
   margin: 0;
   z-index: 3;
@@ -105,7 +104,7 @@ function hideTooltip() {
     top: -12px;
     left: 20px;
     border: 6px solid transparent;
-    border-bottom: 6px solid rgba(var(--v-theme-black), 0.7);
+    border-bottom: 6px solid rgba(#000, 0.7);
     z-index: 2;
   }
 }

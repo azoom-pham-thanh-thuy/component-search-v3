@@ -1,9 +1,6 @@
-// @ts-nocheck
-import { ref, computed, ComputedRef } from 'vue'
 import { getActivePinia, setActivePinia, createPinia, defineStore } from 'pinia'
 import { isEqual, last, get, cloneDeep } from 'lodash'
 import { format } from 'date-fns'
-import useAppStore from '@/stores/app'
 import { buildConfig } from '@/utils/config'
 import Preset from '@/utils/Preset'
 // import randomstring from 'randomstring'
@@ -15,27 +12,19 @@ import type {
   Settings,
   Runtime,
   Preference,
-  Config
+  Config,
+  InputType,
+  StoreAdditional,
+  History
 } from '@/types'
 
 if (!getActivePinia()) setActivePinia(createPinia())
 
-interface Additional {
-  state?: Obj<any>
-  actions?: Obj<Function>
-}
-console.log('lib stores');
-let defaultStoreId: string = 'searchStore'
-
 export default (
-  storeId: string = defaultStoreId,
-  { state, actions }: Additional = {}
+  storeId: string,
+  { state, actions }: StoreAdditional = {}
 ) => {
-  // if (defaultStoreId !== storeId) {
-  //   defaultStoreId = storeId
-  // }
-
-  return defineStore(storeId, () => {
+  return defineStore(storeId || 'searchStore', () => {
     const settings = ref<Settings>({
       categorizedFilters: null,
       filters: [],
@@ -148,7 +137,7 @@ export default (
           if (filter) {
             const filterValue = runtime.value.filterValues[String(filterName)]
             filterValues[String(filterName)] = Preset.isPreset(filterValue)
-              ? filter.presetValueOf(filterValue)
+              ? filter.presetValueOf?.(filterValue)
               : filterValue
           }
           return filterValues
@@ -208,8 +197,7 @@ export default (
       setModal('bookmarks')
     }
 
-    function showBookmarkEdit(bookmark: Partial<Bookmark>) {
-      // @ts-ignore
+    function showBookmarkEdit(bookmark: Bookmark) {
       runtime.value.selectedBookmark = bookmark
       setModal('bookmarkEdit')
     }
@@ -229,20 +217,12 @@ export default (
     }
 
     async function callSearch({ recordable = true } = {}) {
-      console.log('callSearch:::', this, { state, actions })
-      if (typeof search === 'function') {
-        console.log('search:::', search)
-      }
-      if (typeof this?.search === 'function') {
-        console.log('this.search:::', this.search)
-      }
-
+      console.log('Lib callSearch:::', { state, actions })
+      console.log('\x1B[41;93mstores/index.ts (Line 221), canSearch.value:', canSearch.value);
       if (!canSearch.value) return
 
-      // @ts-ignore
       if (typeof actions?.search === 'function') {
         runtime.value.searching = true
-        // @ts-ignore
         await actions.search(fixedFilterValues.value)
         runtime.value.searching = false
       }
@@ -256,7 +236,7 @@ export default (
       fillRequiredFilterValueIfNeeded()
     }
 
-    function setFilterValue([name, value]: Array<any>) {
+    function setFilterValue([name, value]: [string, InputType]) {
       // Reorder
       delete runtime.value.filterValues[name]
       runtime.value.filterValues = {
@@ -265,7 +245,7 @@ export default (
       }
     }
 
-    function updateFilterValue([name, value]: Array<any>) {
+    function updateFilterValue([name, value]: [string, InputType]) {
       setFilterValue([name, value])
       fillRequiredFilterValueIfNeeded()
     }
@@ -289,7 +269,8 @@ export default (
       }
       if (!isAppliedRequiredFilters.value) {
         requiredFilters.value.map((filter) => {
-          setFilterValue([filter.name, filter.defaultValue()])
+          // @ts-ignore
+          setFilterValue([filter.name, filter.defaultValue?.()])
         })
       }
     }
@@ -309,7 +290,7 @@ export default (
       }
     }
 
-    function removeHistory(history: { id: number }) {
+    function removeHistory(history: History) {
       const index = preference.value.histories.findIndex(
         ({ id }) => id === history.id
       )
@@ -330,7 +311,7 @@ export default (
         }
         updateBookmark(bookmark)
       } else {
-        // const id = randomstring.generate(7) // Lib error: global is not defined
+        // const id = randomstring.generate(7) // Lib error: global is not defined (https://github.com/browserify/randombytes/issues/29)
         const id = generateRandomString(7)
         preference.value.bookmarks.push({ ...bookmark, id })
       }

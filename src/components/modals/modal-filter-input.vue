@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-import ModalDialog from '@/components/utils/modal-dialog.vue'
+import { ModalDialog } from '@/components'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { selectedFilter } = storeToRefs(searchStore)
 </script>
 
@@ -16,7 +15,7 @@ const { selectedFilter } = storeToRefs(searchStore)
     </template>
     <component
       :is="
-        typeof selectedFilter.type == 'object' && selectedFilter.type.input()
+        typeof selectedFilter.type == 'object' && (selectedFilter.type.input as Function)()
       "
       :key="selectedFilter.name"
       class="filter-input-content"

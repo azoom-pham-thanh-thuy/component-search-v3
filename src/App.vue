@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useSearchStore from '@/stores'
-import AzSearch from '@/components/search.vue'
+import { AzSearch } from '@/components'
 import {
   categorizedFilters,
   defaultPinnedFilterNames,

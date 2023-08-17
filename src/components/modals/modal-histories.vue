@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
 import { orderBy } from 'lodash'
 import { format, parse } from 'date-fns'
-import ModalDialog from '@/components/utils/modal-dialog.vue'
-import CopyButton from '@/components/utils/copy-button.vue'
+import { ModalDialog, CopyButton } from '@/components'
 import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
-import { Obj } from '@/types'
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { settings, preference } = storeToRefs(searchStore)
 
-const sortedHistories = computed<Obj<any>[]>(() => {
+const sortedHistories = computed(() => {
   return orderBy(preference.value.histories, ['timestamp'], ['desc'])
 })
 
 function withFilter(filterValues: object = {}) {
   return orderBy(
     Object.entries(filterValues).map(([filterName, filterValue]) => {
-      const filter = settings.value.filters.find((x) => x.name === filterName)
+      const filter = settings.value.filters.find(({ name }) => name === filterName)
       return { filter, filterValue }
     }),
     ['filter.required'],
@@ -58,7 +55,7 @@ function formatTimestamp(timestamp: string) {
             <component
               v-if="filter"
               class="filter"
-              :is="typeof filter.type == 'object' && filter.type.value()"
+              :is="typeof filter.type === 'object' && (filter.type.value as Function)()"
               :editable="false"
               :closeable="false"
               :highlighted="filter.required"
@@ -70,7 +67,7 @@ function formatTimestamp(timestamp: string) {
         <div class="footer">
           <div class="date">{{ formatTimestamp(history.timestamp) }}</div>
           <div class="buttons">
-            <copy-button :value="history.filterValues" class="button -copy" />
+            <copy-button class="button -copy" :value="history.filterValues" />
             <v-btn
               variant="outlined"
               size="small"

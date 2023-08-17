@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-import Datepicker from '@/components/utils/datepicker.vue'
-import FilterInput from '@/components/utils/filter-input.vue'
+import { Datepicker, FilterInput } from '@/components'
 import useFilterInput from '@/composables/filter-input'
 
-const { inputValue, internalValue, filter } = useFilterInput(inject('storeId'))
+const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 </script>
 
 <template>

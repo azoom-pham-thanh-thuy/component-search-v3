@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, inject } from 'vue'
 import { get } from 'lodash'
 import { isObject } from '@/utils/app'
-import FilterInput from '@/components/utils/filter-input.vue'
-import Datepicker from '@/components/utils/datepicker.vue'
+import { FilterInput, Datepicker } from '@/components'
 import useFilterInput from '@/composables/filter-input'
 import type { InputType } from '@/types'
 
-const { inputValue, internalValue } = useFilterInput(inject('storeId'))
+const { inputValue, internalValue } = useFilterInput(inject('storeId')!)
 const dateRange = ref<InputType>({ start: null, end: null })
 
 watch(dateRange, (newRange) => (inputValue.value = newRange), { deep: true })
@@ -18,9 +16,9 @@ onMounted(() => {
   }
 })
 
-function isEmptyValue(value: object) {
+provide('isEmptyValue', function isEmptyValue(value: object) {
   return !get(value, 'start') || !get(value, 'end')
-}
+})
 </script>
 
 <template>

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { inject } from 'vue'
 import useSearchStore from '@/stores'
 
 withDefaults(defineProps<{ icon: string }>(), {
   icon: ''
 })
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import { head } from 'lodash'
-import FilterValue from '@/components/utils/filter-value.vue'
+import { FilterValue } from '@/components'
 import useFilterValue, { propOptions } from '@/composables/filter-value'
+import type { FilterItem } from '@/types'
 
 const props = defineProps({ ...propOptions })
 const { filterValue } = useFilterValue(props)
@@ -22,13 +22,13 @@ const tooltipShown = computed(() => {
 })
 
 const allItems = computed(() => {
-  return props.filter.items.filter((item: any) =>
+  return (props.filter.items as FilterItem[]).filter((item) =>
     filterValue.value.includes(item.value)
   )
 })
 
-const headItem = computed<any>(() => {
-  return head(allItems.value)
+const headItem = computed(() => {
+  return head(allItems.value) ?? { icon: undefined, label: '' }
 })
 </script>
 

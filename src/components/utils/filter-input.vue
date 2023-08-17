@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, inject, PropType } from 'vue'
 import { storeToRefs } from 'pinia'
 import { cloneDeep } from 'lodash'
 import useSearchStore from '@/stores'
@@ -14,7 +13,7 @@ const props = defineProps({
   }
 })
 
-const searchStore = useSearchStore(inject('storeId'))
+const searchStore = useSearchStore(inject('storeId')!)
 const { selectedFilter: filter, runtime } = storeToRefs(searchStore)
 
 const addButtonLabel = computed(() => {
@@ -34,7 +33,7 @@ const canApply = computed(() => {
 
 function isEmpty(value: any) {
   if (Preset.isPreset(value)) return false
-  return isEmptyValue(value)
+  return (inject<Function>('isEmptyValue') ?? isEmptyValue)(value)
 }
 
 function apply() {
@@ -71,8 +70,8 @@ function searchWithThis() {
           class="button -add"
           variant="outlined"
           color="primary"
-          @click="apply"
           :disabled="!canApply"
+          @click="apply"
         >
           {{ addButtonLabel }}
         </v-btn>

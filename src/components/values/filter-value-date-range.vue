@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { format, parse, endOfMonth } from 'date-fns'
-import FilterValue from '@/components/utils/filter-value.vue'
+import { FilterValue } from '@/components'
 import useFilterValue, { propOptions } from '@/composables/filter-value'
 
 const props = defineProps({ ...propOptions })
@@ -42,7 +41,7 @@ function createFormat(hideYear: boolean, hideDay: boolean) {
 const tooltipValue = computed(() => {
   const startDate = parse(filterValue.value.start)
   const endDate = parse(filterValue.value.end)
-  const formatDate = (d: Date) => format(d, 'yyyy年M月DD日')
+  const formatDate = (date: Date) => format(date, 'YYYY年M月DD日')
   return `${formatDate(startDate)} ~ ${formatDate(endDate)}`
 })
 </script>

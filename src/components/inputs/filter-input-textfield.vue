@@ -1,17 +1,9 @@
 <script setup lang="ts">
-import { computed, ComputedRef, inject, onMounted } from 'vue'
-import FilterInput from '@/components/utils/filter-input.vue'
+import { FilterInput } from '@/components'
 import useFilterInput from '@/composables/filter-input'
+import { TextfieldOptions } from '@/types';
 
-interface TextfieldOptions {
-  fullwidth: boolean,
-  countable?: true,
-  maxlength: number,
-  preText?: string,
-  postText?: string,
-}
-
-const { inputValue, internalValue, filter } = useFilterInput(inject('storeId'))
+const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 const options = computed(
   () => filter.value.options?.inputTextfield || {}
 ) as ComputedRef<TextfieldOptions>

@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import DatePickerNext from 'vue-datepicker-next'
 import 'vue-datepicker-next/index.css'
 import 'vue-datepicker-next/locale/ja'
 
 interface Props {
-  modelValue?: any
+  modelValue?: null | string
   type?: string
   placeholder?: string
 }
