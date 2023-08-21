@@ -4,7 +4,6 @@ import vuetify from 'vite-plugin-vuetify'
 import dts from 'vite-plugin-dts'
 import { fileURLToPath, URL } from 'url'
 import path from 'path'
-// import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import AutoImport from 'unplugin-auto-import/vite'
 import pkg from './package.json' assert { type: 'json' }
 
@@ -12,8 +11,7 @@ import pkg from './package.json' assert { type: 'json' }
 export default defineConfig({
   plugins: [
     vue(),
-    vuetify(),
-    // cssInjectedByJsPlugin({ topExecutionPriority: false })
+    vuetify({ styles: process.env.NODE_ENV == 'production' ? 'none' : true }),
     dts(),
     AutoImport({
       imports: ['vue'],
@@ -30,25 +28,21 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/main.ts'),
       name: pkg.name,
-      // formats: ['es', 'cjs', 'umd'],
       fileName: (format) => `component-search-v3.${format}.js`,
     },
     rollupOptions: {
-      // input: {
-      //   main: path.resolve(__dirname, 'src/main.ts')
-      // },
-      external: [...Object.keys(pkg.dependencies || {})],
+      external: [
+        ...Object.keys(pkg.dependencies || {}),
+        'vuetify/lib',
+        'vuetify/components',
+      ],
       output: {
         globals: {
           vue: 'Vue',
           vuetify: 'Vuetify',
           pinia: 'pinia',
         },
-        // assetFileNames: (assetInfo) => (
-        //   assetInfo.name == 'style.css' ? 'component-search-v3.css' : assetInfo.name
-        // ),
       },
     },
-    // cssCodeSplit: false
   },
 })

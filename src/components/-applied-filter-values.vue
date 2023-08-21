@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { orderBy } from 'lodash'
-import { CopyButton } from '@/components'
 import { storeToRefs } from 'pinia'
+import { CopyButton } from '@/components'
 import useSearchStore from '@/stores'
 
 const searchStore = useSearchStore(inject('storeId')!)

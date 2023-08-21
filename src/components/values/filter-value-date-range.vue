@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { format, parse, endOfMonth } from 'date-fns'
+import { endOfMonth } from 'date-fns'
+import { JP_DATE_FORMAT, parseDate, formatDate } from '@/utils/date'
 import { FilterValue } from '@/components'
 import useFilterValue, { propOptions } from '@/composables/filter-value'
 
@@ -7,8 +8,8 @@ const props = defineProps({ ...propOptions })
 const { filterValue } = useFilterValue(props)
 
 const displayValue = computed(() => {
-  const startDate = parse(filterValue.value.start)
-  const endDate = parse(filterValue.value.end)
+  const startDate = parseDate(filterValue.value.start)
+  const endDate = parseDate(filterValue.value.end)
   const now = new Date()
 
   const sameYear = startDate.getFullYear() === endDate.getFullYear()
@@ -28,21 +29,20 @@ const displayValue = computed(() => {
   const startFormat = createFormat(hideStartYear, hideStartDay)
   const endFormat = createFormat(hideEndYear, hideEndDay)
 
-  const startStr = format(startDate, startFormat)
-  const endStr = format(endDate, endFormat)
+  const startStr = formatDate(startDate, startFormat)
+  const endStr = formatDate(endDate, endFormat)
 
   return sameYear && sameMonth ? `${startStr}` : `${startStr}~${endStr}`
 })
 
 function createFormat(hideYear: boolean, hideDay: boolean) {
-  return `${hideYear ? '' : 'YY年'}M月${hideDay ? '' : 'D日'}`
+  return `${hideYear ? '' : 'yy年'}M月${hideDay ? '' : 'd日'}`
 }
 
 const tooltipValue = computed(() => {
-  const startDate = parse(filterValue.value.start)
-  const endDate = parse(filterValue.value.end)
-  const formatDate = (date: Date) => format(date, 'YYYY年M月DD日')
-  return `${formatDate(startDate)} ~ ${formatDate(endDate)}`
+  const startDate = parseDate(filterValue.value.start)
+  const endDate = parseDate(filterValue.value.end)
+  return `${formatDate(startDate, JP_DATE_FORMAT)} ~ ${formatDate(endDate, JP_DATE_FORMAT)}`
 })
 </script>
 

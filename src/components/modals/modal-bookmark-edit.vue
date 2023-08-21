@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ModalDialog } from '@/components'
 import { get, orderBy } from 'lodash'
-import useSearchStore from '@/stores'
 import { storeToRefs } from 'pinia'
+import { ModalDialog } from '@/components'
+import useSearchStore from '@/stores'
 import { type Filter } from '@/types'
 
 const searchStore = useSearchStore(inject('storeId')!)

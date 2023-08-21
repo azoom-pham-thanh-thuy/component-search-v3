@@ -1,10 +1,9 @@
 import { getActivePinia, setActivePinia, createPinia, defineStore } from 'pinia'
 import { isEqual, last, get, cloneDeep } from 'lodash'
-import { format } from 'date-fns'
 import { buildConfig } from '@/utils/config'
 import Preset from '@/utils/Preset'
-// import randomstring from 'randomstring'
 import { generateRandomString } from '@/utils/app'
+import { formatDate, DATE_FORMAT, TIME_FORMAT } from '@/utils/date'
 import type {
   Obj,
   Filter,
@@ -15,15 +14,12 @@ import type {
   Config,
   InputType,
   StoreAdditional,
-  History
+  History,
 } from '@/types'
 
 if (!getActivePinia()) setActivePinia(createPinia())
 
-export default (
-  storeId: string,
-  { state, actions }: StoreAdditional = {}
-) => {
+export default (storeId: string, { state, actions }: StoreAdditional = {}) => {
   return defineStore(storeId || 'searchStore', () => {
     const settings = ref<Settings>({
       categorizedFilters: null,
@@ -184,7 +180,7 @@ export default (
       setModal('filters')
     }
 
-    function showFilter(filterName: null | string) {
+    function showFilter(filterName: string) {
       runtime.value.selectedFilterName = filterName
       setModal('filterInput')
     }
@@ -217,8 +213,6 @@ export default (
     }
 
     async function callSearch({ recordable = true } = {}) {
-      console.log('Lib callSearch:::', { state, actions })
-      console.log('\x1B[41;93mstores/index.ts (Line 221), canSearch.value:', canSearch.value);
       if (!canSearch.value) return
 
       if (typeof actions?.search === 'function') {
@@ -280,7 +274,7 @@ export default (
 
       if (!isEqual(filterValues, get(lastHistory, 'filterValues'))) {
         const history = {
-          timestamp: format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+          timestamp: formatDate(new Date(), `${DATE_FORMAT} ${TIME_FORMAT}`),
           filterValues: { ...filterValues },
         }
         preference.value.histories.push(history)
@@ -311,7 +305,6 @@ export default (
         }
         updateBookmark(bookmark)
       } else {
-        // const id = randomstring.generate(7) // Lib error: global is not defined (https://github.com/browserify/randombytes/issues/29)
         const id = generateRandomString(7)
         preference.value.bookmarks.push({ ...bookmark, id })
       }

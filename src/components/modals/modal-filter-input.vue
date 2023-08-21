@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { ModalDialog } from '@/components'
 import useSearchStore from '@/stores'
-import { storeToRefs } from 'pinia'
 
 const searchStore = useSearchStore(inject('storeId')!)
 const { selectedFilter } = storeToRefs(searchStore)

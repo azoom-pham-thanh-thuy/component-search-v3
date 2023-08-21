@@ -147,7 +147,6 @@ provide('storeId', props.storeId)
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  // color: rgb(var(--v-theme-primary));
   > .main {
     display: flex;
     width: 100%;

@@ -1,7 +1,10 @@
+@use 'sass:map';
+@use 'vuetify/settings';
+
 // ========== BREAKPOINTS ========== //
-$screen-mobile-width: 576px;
-$screen-tablet-width: 768px;
-$screen-desktop-width: 1024px;
+$screen-mobile-width: map.get(settings.$grid-breakpoints, 'sm');
+$screen-tablet-width: map.get(settings.$grid-breakpoints, 'md');
+$screen-desktop-width: map.get(settings.$grid-breakpoints, 'lg');
 
 // ========== ELEVATIONS ========== //
 $elevation-property: box-shadow !default;

@@ -7,6 +7,7 @@ const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 
 <template>
   <filter-input v-bind="{ internalValue }">
+    <!-- @vue-ignore -->
     <datepicker
       v-model="inputValue"
       type="date"

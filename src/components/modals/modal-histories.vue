@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { orderBy } from 'lodash'
-import { format, parse } from 'date-fns'
+import { storeToRefs } from 'pinia'
 import { ModalDialog, CopyButton } from '@/components'
 import useSearchStore from '@/stores'
-import { storeToRefs } from 'pinia'
+import { parseDate, formatDate, DATE_FORMAT, TIME_FORMAT } from '@/utils/date'
 
 const searchStore = useSearchStore(inject('storeId')!)
 const { settings, preference } = storeToRefs(searchStore)
@@ -15,7 +15,9 @@ const sortedHistories = computed(() => {
 function withFilter(filterValues: object = {}) {
   return orderBy(
     Object.entries(filterValues).map(([filterName, filterValue]) => {
-      const filter = settings.value.filters.find(({ name }) => name === filterName)
+      const filter = settings.value.filters.find(
+        ({ name }) => name === filterName
+      )
       return { filter, filterValue }
     }),
     ['filter.required'],
@@ -34,7 +36,10 @@ function addToBookmarks(filterValues: object) {
 }
 
 function formatTimestamp(timestamp: string) {
-  return format(parse(timestamp), 'YYYY/MM/DD HH:mm:ss')
+  return formatDate(
+    parseDate(timestamp, `${DATE_FORMAT} ${TIME_FORMAT}`),
+    `yyyy/MM/dd ${TIME_FORMAT}`
+  )
 }
 </script>
 

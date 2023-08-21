@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { format, parse } from 'date-fns'
 import { FilterValue } from '@/components'
 import useFilterValue, { propOptions } from '@/composables/filter-value'
+import { parseDate, formatDate } from '@/utils/date'
 
 const props = defineProps({ ...propOptions })
 const { filterValue } = useFilterValue(props)
 
 const displayValue = computed(() => {
-  const startDate = parse(filterValue.value.start)
-  const endDate = parse(filterValue.value.end)
+  const startDate = parseDate(filterValue.value.start, 'yyyy-MM')
+  const endDate = parseDate(filterValue.value.end, 'yyyy-MM')
 
   const endStrFormat =
-    startDate.getFullYear() === endDate.getFullYear() ? 'M月' : 'YY年M月'
+    startDate.getFullYear() === endDate.getFullYear() ? 'M月' : 'yy年M月'
 
-  const startStr = format(startDate, 'YY年M月')
-  const endStr = format(endDate, endStrFormat)
+  const startStr = formatDate(startDate, 'yy年M月')
+  const endStr = formatDate(endDate, endStrFormat)
 
   return `${startStr} ~ ${endStr}`
 })

@@ -1,7 +1,7 @@
+import type { PropType } from 'vue'
 import pick from 'lodash/pick'
 import Preset from '@/utils/Preset'
 import { Obj, Filter } from '@/types'
-import { PropType } from 'vue'
 
 export const propOptions = {
   filter: {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { ModalDialog, CategorizedView, SortableList } from '@/components'
 import { SORT_ICONS } from '@/constants/settings'
-import { storeToRefs } from 'pinia'
 import useSearchStore from '@/stores'
 
 const searchStore = useSearchStore(inject('storeId')!)

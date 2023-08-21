@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import DatePickerNext from 'vue-datepicker-next'
-import 'vue-datepicker-next/index.css'
 import 'vue-datepicker-next/locale/ja'
 
 interface Props {
@@ -38,7 +37,7 @@ const internalValue = computed({
 </template>
 
 <style lang="scss">
-// @import '~vue-datepicker-next/scss/index.scss';
+@import 'vue-datepicker-next/scss/index.scss';
 
 .mx-datepicker {
   padding: 10px 16px;
@@ -46,7 +45,7 @@ const internalValue = computed({
   border: 1px solid rgb(var(--v-theme-primary));
   font-size: 16px;
 }
-.mx-input-wrapper input {
+.mx-input-wrapper > .input {
   outline: 0 none;
   border: none;
 }

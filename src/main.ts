@@ -16,14 +16,6 @@ const app = createApp(AppComponent)
 app.use(vuetify)
 app.mount('#app')
 
-// export default {
-//   install: (app: App) => {
-//     app.component('AzSearch', AzSearch)
-//     app.component('AzFilterInput', AzFilterInput)
-//     app.component('AzFilterValue', AzFilterValue)
-//   },
-// }
-
 export {
   AzSearch,
   AzFilterInput,

@@ -49,6 +49,7 @@ provide('isEmptyValue', function isEmptyValue(value: object) {
   width: 100%;
   padding: 20px 0;
   display: flex;
+  justify-content: center;
   align-items: center;
   > .month {
     &:first-child {
