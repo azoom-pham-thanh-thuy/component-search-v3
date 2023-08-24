@@ -45,8 +45,8 @@ watch(
       if (settings.value.searchWithQueryStringOnInit && location.search) {
         const condition = qs.parse(location.search, {
           ignoreQueryPrefix: true,
-          decoder
-        })        
+          decoder,
+        })
         updateFilterValues(condition)
         callSearch()
         history.replaceState(null, '', location.pathname)

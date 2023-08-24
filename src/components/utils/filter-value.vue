@@ -29,7 +29,7 @@ function showTooltip(event: Event) {
   const rect = (event.target as HTMLElement).getBoundingClientRect()
   tooltip.value = {
     positionTop: rect.bottom + window.pageYOffset + 14,
-    positionLeft: rect.left + window.pageXOffset - 4
+    positionLeft: rect.left + window.pageXOffset - 4,
   }
 }
 
@@ -66,7 +66,7 @@ function hideTooltip() {
       class="filter-tooltip"
       :style="{
         top: `${tooltip && tooltip.positionTop}px`,
-        left: `${tooltip && tooltip.positionLeft}px`
+        left: `${tooltip && tooltip.positionLeft}px`,
       }"
     >
       <slot name="tooltip" />

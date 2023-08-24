@@ -3,16 +3,16 @@ import { get } from 'lodash'
 import { isObject } from '@/utils/app'
 import { FilterInput, Datepicker } from '@/components'
 import useFilterInput from '@/composables/filter-input'
-import type { InputType } from '@/types'
+import type { DateRange } from '@/types'
 
 const { inputValue, internalValue } = useFilterInput(inject('storeId')!)
-const dateRange = ref<InputType>({ start: null, end: null })
+const dateRange = ref<DateRange>({ start: null, end: null })
 
 watch(dateRange, (newRange) => (inputValue.value = newRange), { deep: true })
 
 onMounted(() => {
   if (isObject(inputValue.value)) {
-    dateRange.value = inputValue.value
+    dateRange.value = inputValue.value as DateRange
   }
 })
 
@@ -24,7 +24,6 @@ provide('isEmptyValue', function isEmptyValue(value: object) {
 <template>
   <filter-input v-bind="{ internalValue }">
     <div class="filter-date-range">
-      <!-- @vue-ignore -->
       <datepicker
         v-model="dateRange.start"
         type="month"
@@ -32,7 +31,6 @@ provide('isEmptyValue', function isEmptyValue(value: object) {
         tabindex="1"
         class="month"
       />
-      <!-- @vue-ignore -->
       <datepicker
         v-model="dateRange.end"
         type="month"

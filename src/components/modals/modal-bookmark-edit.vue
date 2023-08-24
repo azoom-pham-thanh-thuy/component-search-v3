@@ -27,7 +27,7 @@ function saveAsDefault() {
   searchStore.saveBookmark({
     ...bookmark.value,
     name: name.value,
-    isDefault: true
+    isDefault: true,
   })
   searchStore.showBookmarks()
 }

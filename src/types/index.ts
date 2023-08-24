@@ -4,7 +4,7 @@ import {
   FILTER_VALUE_COMPONENTS,
   FILTER_ICONS,
   FILTER_TYPES,
-  MODAL_COMPONENTS
+  MODAL_COMPONENTS,
 } from '@/constants/settings'
 import Preset from '@/utils/Preset'
 
@@ -14,7 +14,12 @@ export type InputCompKeys = keyof typeof FILTER_INPUT_COMPONENTS
 export type ValueCompKeys = keyof typeof FILTER_VALUE_COMPONENTS
 export type ModalComponentKeys = keyof typeof MODAL_COMPONENTS
 
-export type InputType = null | string | { [key: string]: any } | Array<number | string> | Preset
+export type InputType =
+  | null
+  | string
+  | { [key: string]: any }
+  | Array<number | string>
+  | Preset
 
 export type Obj<T = unknown> = Record<string | number, T>
 
@@ -95,7 +100,7 @@ export interface Bookmark {
 }
 
 export interface Runtime {
-  modal: null | string
+  modal: null | ModalComponentKeys
   isCompactView: boolean
   selectedFilterName: null | string
   selectedBookmark: null | Bookmark

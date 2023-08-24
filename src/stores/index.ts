@@ -15,6 +15,7 @@ import type {
   InputType,
   StoreAdditional,
   History,
+  ModalComponentKeys,
 } from '@/types'
 
 if (!getActivePinia()) setActivePinia(createPinia())
@@ -172,7 +173,7 @@ export default (storeId: string, { state, actions }: StoreAdditional = {}) => {
       preference.value.initialized = true
     }
 
-    function setModal(value: string | null) {
+    function setModal(value: ModalComponentKeys | null) {
       runtime.value.modal = value
     }
 

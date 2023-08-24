@@ -2,7 +2,7 @@
 import useSearchStore from '@/stores'
 
 withDefaults(defineProps<{ icon: string }>(), {
-  icon: ''
+  icon: '',
 })
 
 const searchStore = useSearchStore(inject('storeId')!)

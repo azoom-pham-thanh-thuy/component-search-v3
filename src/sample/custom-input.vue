@@ -2,34 +2,35 @@
 import { get } from 'lodash'
 import { AzFilterInput, useFilterInput } from '@/main'
 import { isObject } from '@/utils/app'
+import { FilterItem, Obj } from '@/types'
 
 const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 
 const inputVal = computed({
   get: () => {
     return isObject(inputValue.value)
-      ? inputValue.value
+      ? (inputValue.value as Obj<number | number[]>)
       : { fruits: [], grade: null }
   },
-  set: (value) => (inputValue.value = value)
+  set: (value) => (inputValue.value = value),
 })
 
-function isEmptyValue(value: object) {
+const filterItems = computed(() => filter.value.items as Obj<FilterItem[]>)
+
+provide('isEmptyValue', function isEmptyValue(value: object) {
   return !get(value, 'fruits.length') || !get(value, 'grade')
-}
+})
 </script>
 
 <template>
   <az-filter-input v-bind="{ internalValue }">
     <div class="custom-input">
-      <!-- @vue-ignore -->
       <div
-        v-for="item in filter.items.fruits"
+        v-for="item in filterItems.fruits"
         :key="item.value"
         class="filter-checkbox"
       >
         <label class="checkbox-container">
-          <!-- @vue-ignore -->
           <input
             v-model="inputVal.fruits"
             type="checkbox"
@@ -42,26 +43,22 @@ function isEmptyValue(value: object) {
         </label>
       </div>
 
-      <div>
-        <div class="form-field -radio">
-          <!-- @vue-ignore -->
-          <label
-            v-for="grade in filter.items.grades"
-            :key="grade.value"
-            class="filter-radio"
-          >
-            <!-- @vue-ignore -->
-            <input
-              v-model="inputVal.grade"
-              type="radio"
-              name="grade"
-              class="radio"
-              :value="grade.value"
-            />
-            <span class="check-mark"></span>
-            {{ grade.label }}
-          </label>
-        </div>
+      <div class="form-field -radio">
+        <label
+          v-for="grade in filterItems.grades"
+          :key="grade.value"
+          class="filter-radio"
+        >
+          <input
+            v-model="inputVal.grade"
+            type="radio"
+            name="grade"
+            class="radio"
+            :value="grade.value"
+          />
+          <span class="check-mark"></span>
+          {{ grade.label }}
+        </label>
       </div>
     </div>
   </az-filter-input>
@@ -121,6 +118,10 @@ function isEmptyValue(value: object) {
       transform: rotate(45deg);
     }
   }
+}
+
+.form-field {
+  margin-top: 10px;
 }
 
 .filter-radio {

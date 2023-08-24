@@ -7,10 +7,8 @@ import type { InputType } from '@/types'
 
 export default function useFilterInput(storeId: string) {
   const searchStore = useSearchStore(storeId || 'searchStore')
-  const {
-    selectedFilter: filter,
-    selectedFilterValue: filterValue
-  } = storeToRefs(searchStore)
+  const { selectedFilter: filter, selectedFilterValue: filterValue } =
+    storeToRefs(searchStore)
 
   const inputValue = ref<InputType>(null)
   const internalValue = ref<InputType>(null)
@@ -87,6 +85,6 @@ export default function useFilterInput(storeId: string) {
     internalPreset,
     filter,
     togglePreset,
-    isSelectedPreset
+    isSelectedPreset,
   }
 }

@@ -9,8 +9,8 @@ import type { InputType } from '@/types'
 const props = defineProps({
   internalValue: {
     type: [null, Object] as PropType<InputType>,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const searchStore = useSearchStore(inject('storeId')!)

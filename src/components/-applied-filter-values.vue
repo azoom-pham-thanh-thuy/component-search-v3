@@ -22,7 +22,7 @@ const emptyMessage = computed(() =>
   <div
     :class="[
       'applied-filter-values',
-      { '-compact-view': runtime.isCompactView }
+      { '-compact-view': runtime.isCompactView },
     ]"
   >
     <div class="values">

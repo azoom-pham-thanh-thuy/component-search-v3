@@ -3,7 +3,7 @@ import {
   isNull,
   isUndefined,
   isArray,
-  isObject as _isObject
+  isObject as _isObject,
 } from 'lodash'
 
 export function isObject(obj: any): boolean {

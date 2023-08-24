@@ -26,7 +26,7 @@ import {
   createLastNMonthRange,
   createNMonthRange,
   createNQuarterRange,
-  createNHalfPeriodRange
+  createNHalfPeriodRange,
 } from '@/utils/date'
 
 const FILTER_INPUT_COMPONENTS = {
@@ -38,7 +38,7 @@ const FILTER_INPUT_COMPONENTS = {
   dateRange: FilterInputDateRange,
   yearMonth: FilterInputYearMonth,
   yearMonthRange: FilterInputYearMonthRange,
-  autocomplete: FilterInputAutocomplete
+  autocomplete: FilterInputAutocomplete,
 }
 
 const FILTER_VALUE_COMPONENTS = {
@@ -48,7 +48,7 @@ const FILTER_VALUE_COMPONENTS = {
   dateRange: FilterValueDateRange,
   yearMonth: FilterValueYearMonth,
   yearMonthRange: FilterValueYearMonthRange,
-  boolean: FilterValueBoolean
+  boolean: FilterValueBoolean,
 }
 
 const FILTER_ICONS = {
@@ -61,24 +61,24 @@ const FILTER_ICONS = {
   yearMonth: 'mdi-calendar-blank',
   yearMonthRange: 'mdi-calendar-range',
   autocomplete: 'mdi-text-shadow',
-  default: 'mdi-wrench'
+  default: 'mdi-wrench',
 }
 
 const DATE_RANGE_PRESETS = [
   {
     name: 'last1Month',
     label: '過去1ヶ月',
-    create: () => createLastNMonthRange(1)
+    create: () => createLastNMonthRange(1),
   },
   {
     name: 'last3Months',
     label: '過去3ヶ月',
-    create: () => createLastNMonthRange(3)
+    create: () => createLastNMonthRange(3),
   },
   {
     name: 'last6Months',
     label: '過去6ヶ月',
-    create: () => createLastNMonthRange(6)
+    create: () => createLastNMonthRange(6),
   },
   { name: 'thisMonth', label: '今月', create: () => createNMonthRange(0) },
   { name: 'prevMonth', label: '前月', create: () => createNMonthRange(-1) },
@@ -86,36 +86,40 @@ const DATE_RANGE_PRESETS = [
   {
     name: 'thisQuarter',
     label: '今四半期',
-    create: () => createNQuarterRange(0)
+    create: () => createNQuarterRange(0),
   },
   {
     name: 'prevQuarter',
     label: '前四半期',
-    create: () => createNQuarterRange(-1)
+    create: () => createNQuarterRange(-1),
   },
   {
     name: 'nextQuarter',
     label: '来四半期',
-    create: () => createNQuarterRange(1)
+    create: () => createNQuarterRange(1),
   },
   {
     name: 'thisHalf',
     label: '今半期',
-    create: () => createNHalfPeriodRange(0)
+    create: () => createNHalfPeriodRange(0),
   },
   {
     name: 'prevHalf',
     label: '前半期',
-    create: () => createNHalfPeriodRange(-1)
+    create: () => createNHalfPeriodRange(-1),
   },
-  { name: 'nextHalf', label: '来半期', create: () => createNHalfPeriodRange(1) }
+  {
+    name: 'nextHalf',
+    label: '来半期',
+    create: () => createNHalfPeriodRange(1),
+  },
 ]
 
 const FILTER_TYPES = {
   text: { input: FILTER_INPUT_COMPONENTS.text, value: FilterValueString },
   checkbox: {
     input: FILTER_INPUT_COMPONENTS.checkbox,
-    value: FilterValueArray
+    value: FilterValueArray,
   },
   radio: { input: FilterInputRadio, value: FilterValueString },
   select: { input: FilterInputSelect, value: FilterValueString },
@@ -123,14 +127,14 @@ const FILTER_TYPES = {
   dateRange: {
     input: FilterInputDateRange,
     value: FilterValueDateRange,
-    presets: DATE_RANGE_PRESETS
+    presets: DATE_RANGE_PRESETS,
   },
   yearMonth: { input: FilterInputYearMonth, value: FilterValueYearMonth },
   yearMonthRange: {
     input: FilterInputYearMonthRange,
-    value: FilterValueYearMonthRange
+    value: FilterValueYearMonthRange,
   },
-  autocomplete: { input: FilterInputAutocomplete, value: FilterValueString }
+  autocomplete: { input: FilterInputAutocomplete, value: FilterValueString },
 }
 
 const MODAL_COMPONENTS = {
@@ -138,13 +142,13 @@ const MODAL_COMPONENTS = {
   filterInput: ModalFilterInput,
   bookmarks: ModalBookmarks,
   bookmarkEdit: ModalBookmarkEdit,
-  history: ModalHistories
+  history: ModalHistories,
 }
 
 const SORT_ICONS = {
   default: 'mdi-sort-variant',
   pinned: 'mdi-pin-outline',
-  collated: 'mdi-sort-alphabetical-variant'
+  collated: 'mdi-sort-alphabetical-variant',
 }
 
 export {
@@ -154,5 +158,5 @@ export {
   FILTER_TYPES,
   MODAL_COMPONENTS,
   SORT_ICONS,
-  DATE_RANGE_PRESETS
+  DATE_RANGE_PRESETS,
 }

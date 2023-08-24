@@ -16,7 +16,7 @@ export const decoder = (
     true: true,
     false: false,
     null: null,
-    undefined
+    undefined,
   }
   if (str in keywords) {
     return keywords[str as keyof typeof keywords]

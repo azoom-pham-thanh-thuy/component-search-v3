@@ -6,8 +6,8 @@ import useSearchStore from '@/stores'
 defineProps({
   value: {
     type: Object,
-    default: () => ({})
-  }
+    default: () => ({}),
+  },
 })
 
 const searchStore = useSearchStore(inject('storeId')!)
@@ -25,7 +25,7 @@ function showTooltip(event: any) {
   const rect = event.target.getBoundingClientRect()
   tooltip.value = {
     positionTop: rect.bottom + window.pageYOffset + 5,
-    positionLeft: rect.left + window.pageXOffset - 8
+    positionLeft: rect.left + window.pageXOffset - 8,
   }
   setTimeout(() => {
     tooltip.value = null
@@ -63,7 +63,7 @@ function copyLinkToClipboard(filterValues: object) {
       class="tooltip"
       :style="{
         top: `${tooltip && tooltip.positionTop}px`,
-        left: `${tooltip && tooltip.positionLeft}px`
+        left: `${tooltip && tooltip.positionLeft}px`,
       }"
     >
       {{ message }}

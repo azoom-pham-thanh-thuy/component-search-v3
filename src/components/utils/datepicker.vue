@@ -11,7 +11,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   type: 'date',
-  placeholder: ''
+  placeholder: '',
 })
 
 const emit = defineEmits<{
@@ -22,7 +22,7 @@ const internalValue = computed({
   get: () => props.modelValue,
   set: (value) => {
     emit('update:modelValue', value)
-  }
+  },
 })
 </script>
 

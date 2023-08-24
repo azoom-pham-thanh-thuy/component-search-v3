@@ -12,7 +12,6 @@ import type {
   TypeKeys,
   InputCompKeys,
   ValueCompKeys,
-  Obj,
   Filter,
   Config,
   PresetArgs,
@@ -60,7 +59,7 @@ export const buildConfig = async (config: Config) => {
 
       if (typeof filter.type === 'string') {
         type = FILTER_TYPES[filter.type as TypeKeys]
-      } else {        
+      } else {
         type.input =
           typeof filter.type.input === 'string'
             ? FILTER_INPUT_COMPONENTS[filter.type.input as InputCompKeys]
@@ -77,7 +76,7 @@ export const buildConfig = async (config: Config) => {
           ? type.presets.map((preset) => new Preset(preset))
           : null,
       }
-      
+
       filter.presetValueOf = type.presets
         ? (value) => {
             const preset = type.presets?.find(

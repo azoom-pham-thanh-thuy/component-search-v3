@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FilterInput } from '@/components'
 import useFilterInput from '@/composables/filter-input'
-import { TextfieldOptions } from '@/types';
+import { TextfieldOptions } from '@/types'
 
 const { inputValue, internalValue, filter } = useFilterInput(inject('storeId')!)
 const options = computed(

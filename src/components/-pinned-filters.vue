@@ -13,7 +13,11 @@ const { settings, runtime, pinnedFilters } = storeToRefs(searchStore)
       :key="filter.name"
       class="filter-wrapper"
     >
-      <v-chip color="primary" class="filter" @click="searchStore.showFilter(filter.name)">
+      <v-chip
+        color="primary"
+        class="filter"
+        @click="searchStore.showFilter(filter.name)"
+      >
         <v-icon size="x-small" class="icon" :icon="filter.icon" />
         <span class="label">
           {{ filter.label }}

@@ -4,32 +4,32 @@ import type { InputType, FilterItem } from '@/types'
 const props = defineProps({
   modelValue: {
     type: String as PropType<InputType>,
-    required: true
+    required: true,
   },
   valueKey: {
     type: String,
-    required: true
+    required: true,
   },
   displayKey: {
     type: String,
-    required: true
+    required: true,
   },
   identifyKey: {
     type: String as PropType<keyof FilterItem>,
-    required: true
+    required: true,
   },
   placeholder: {
     type: String,
-    default: ''
+    default: '',
   },
   suggestions: {
     type: Array as PropType<FilterItem[]>,
-    required: true
+    required: true,
   },
   error: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const emit = defineEmits<{

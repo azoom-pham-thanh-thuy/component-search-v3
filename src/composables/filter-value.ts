@@ -13,9 +13,8 @@ export const propOptions = {
     default: null,
   },
   filterValue: {
-    type: Array,
-    required: false,
-    default: () => [],
+    type: null,
+    required: true,
   },
   editable: {
     type: Boolean,
