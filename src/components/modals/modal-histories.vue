@@ -66,6 +66,7 @@ function formatTimestamp(timestamp: string) {
               :highlighted="filter.required"
               :filter="filter"
               :value="filterValue"
+              :filterValue="null"
             />
           </template>
         </div>

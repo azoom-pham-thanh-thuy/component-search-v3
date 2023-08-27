@@ -96,10 +96,8 @@ function searchWithThis() {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 6px;
     margin-top: 20px;
-  }
-  > .footer > .actions > .button {
-    margin: 0 3px;
   }
 }
 </style>

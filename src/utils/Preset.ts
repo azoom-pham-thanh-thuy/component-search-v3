@@ -1,4 +1,4 @@
-import type { Obj, PresetArgs, DateRange } from '@/types'
+import type { PresetArgs, DateRange } from '@/types'
 
 export default class Preset {
   name: string
@@ -19,7 +19,7 @@ export default class Preset {
     this.__AZ_FILTER_PRESET__ = true
   }
 
-  static isPreset(obj: Obj<string | boolean>) {
+  static isPreset(obj: any) {
     return obj && obj.name && obj.__AZ_FILTER_PRESET__
   }
 }

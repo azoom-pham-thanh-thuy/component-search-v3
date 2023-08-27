@@ -1,5 +1,5 @@
-import CustomInput from '@/sample/custom-input.vue'
-import CustomValue from '@/sample/custom-value.vue'
+import CustomInput from '@/sample/components/custom-input.vue'
+import CustomValue from '@/sample/components/custom-value.vue'
 import { preset } from '@/utils/Preset'
 
 const loadStatuses = () => {
