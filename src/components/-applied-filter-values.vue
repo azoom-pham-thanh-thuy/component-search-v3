@@ -36,7 +36,7 @@ const emptyMessage = computed(() =>
           :highlighted="filter.required"
           :filter="filter"
           :value="runtime.filterValues[filter.name]"
-          :filterValue="undefined"
+          :filterValue="null"
         />
       </template>
       <div v-if="!appliedFilters.length" class="value -empty">

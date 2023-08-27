@@ -7,8 +7,7 @@ import {
   defaultFilterValues
 } from '@/sample/config'
 
-const storeId = 'azSearchStore'
-const searchStore = useSearchStore(storeId)
+const searchStore = useSearchStore('searchStore')
 searchStore.init({
   filters: categorizedFilters,
   defaultPinnedFilterNames,
@@ -18,13 +17,13 @@ searchStore.init({
   searchAfterInit: false,
   searchAfterFilterChanged: true,
   historySize: 20,
-  isMinimalMode: false
+  isMinimalMode: false,
 })
 </script>
 
 <template>
   <div class="app-content">
-    <az-search class="search" :store-id="storeId" />
+    <az-search :store-id="searchStore.$id" />
   </div>
 </template>
 

@@ -74,6 +74,7 @@ function withFilter(filterValues: object = {}) {
             :filter="filter"
             :highlighted="filter.required"
             :value="filterValue"
+            :filterValue="null"
           />
         </div>
       </div>

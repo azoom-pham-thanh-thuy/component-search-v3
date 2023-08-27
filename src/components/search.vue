@@ -218,6 +218,7 @@ provide('storeId', props.storeId)
   }
   > .actions > .button.-search {
     flex: 1;
+    min-width: calc(var(--v-btn-height) * 2 + $btnsDistance);
     @include screen-mobile {
       min-width: 85px;
     }

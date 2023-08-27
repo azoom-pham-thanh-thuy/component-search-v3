@@ -9,15 +9,6 @@ import {
 import useFilterInput from '@/composables/filter-input'
 import useFilterValue from '@/composables/filter-value'
 
-/** In the development environment, uncomment the lines below **/
-// import { createApp } from 'vue'
-// import vuetify from '@/plugins/vuetify'
-// import AppComponent from '@/App.vue'
-
-// const app = createApp(AppComponent)
-// app.use(vuetify)
-// app.mount('#app')
-
 export * from '@/types'
 export {
   AzSearch,

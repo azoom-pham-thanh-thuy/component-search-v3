@@ -18,7 +18,7 @@ const inputVal = computed({
 
 const filterItems = computed(() => filter.value.items as Obj<FilterItem[]>)
 
-provide('isEmptyValue', function isEmptyValue(value: object) {
+provide('isEmptyValue', function (value: object) {
   return !get(value, 'fruits.length') || !get(value, 'grade')
 })
 </script>
