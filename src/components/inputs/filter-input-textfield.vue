@@ -25,7 +25,7 @@ function autoFocusInput() {
     <div
       :class="['filter-input-textfield', { '-fullwidth': options.fullwidth }]"
     >
-      <v-form class="form-field">
+      <v-form class="form-field" @submit.prevent="false">
         <v-text-field
           v-model="inputValue"
           class="textfield"

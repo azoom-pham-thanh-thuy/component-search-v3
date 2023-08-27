@@ -105,7 +105,7 @@ provide('isEmptyValue', function isEmptyValue(value: object) {
     margin: 2px;
     font-size: 13px;
     color: rgb(var(--v-theme-on-surface)) !important;
-    background-color: rgb(var(--v-theme-gray));
+    background-color: rgb(var(--v-theme-gray), 223 223 223);
     &.-selected {
       color: rgb(var(--v-theme-surface)) !important;
       background-color: rgb(var(--v-theme-primary));

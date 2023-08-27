@@ -4,11 +4,10 @@ import { cloneDeep } from 'lodash'
 import useSearchStore from '@/stores'
 import Preset from '@/utils/Preset'
 import { isEmptyValue } from '@/utils/app'
-import type { InputType } from '@/types'
 
 const props = defineProps({
   internalValue: {
-    type: [null, Object] as PropType<InputType>,
+    type: null,
     required: true,
   },
 })
@@ -17,15 +16,13 @@ const searchStore = useSearchStore(inject('storeId')!)
 const { selectedFilter: filter, runtime } = storeToRefs(searchStore)
 
 const addButtonLabel = computed(() => {
-  return Object.keys(runtime.value.filterValues).includes(
-    String(filter.value?.name)
-  )
+  return Object.keys(runtime.value.filterValues).includes(filter.value.name)
     ? '絞り込みを変更'
     : '絞り込みに追加'
 })
 
 const canApply = computed(() => {
-  if (!filter.value?.allowEmptyValue) {
+  if (!filter.value.allowEmptyValue) {
     return !isEmpty(props.internalValue)
   }
   return true
@@ -33,17 +30,17 @@ const canApply = computed(() => {
 
 function isEmpty(value: any) {
   if (Preset.isPreset(value)) return false
-  return (inject<Function>('isEmptyValue') ?? isEmptyValue)(value)
+  return inject<Function>('isEmptyValue', isEmptyValue)(value)
 }
 
 function apply() {
   const value = cloneDeep(props.internalValue)
-  searchStore.updateFilterValue([filter.value?.name, value])
+  searchStore.updateFilterValue([filter.value.name, value])
   searchStore.hideModal()
 }
 
 function searchWithThis() {
-  searchStore.updateFilterValues({ [filter.value!.name]: props.internalValue })
+  searchStore.updateFilterValues({ [filter.value.name]: props.internalValue })
   searchStore.callSearch()
   searchStore.hideModal()
 }
@@ -55,10 +52,10 @@ function searchWithThis() {
       <slot />
     </div>
     <div class="footer">
-      <div v-if="filter" class="helper">{{ filter.helperText }}</div>
+      <p v-if="filter.helperText" class="helper">{{ filter.helperText }}</p>
       <div class="actions">
         <v-btn
-          v-if="filter?.allowSingleSearch"
+          v-if="filter.allowSingleSearch"
           class="button -search"
           color="primary"
           :disabled="!canApply"

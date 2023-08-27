@@ -31,10 +31,8 @@ const { selectedFilter } = storeToRefs(searchStore)
   left: 50%;
   transform: translateX(-50%);
   @include screen-mobile {
-    width: 100%;
     top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
   }
 }
 .filter-input-content {

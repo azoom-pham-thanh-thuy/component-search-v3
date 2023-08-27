@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { get } from 'lodash'
-import { AzFilterInput, useFilterInput } from '@/main'
+import useFilterInput from '@/composables/filter-input'
+import { FilterInput } from '@/components'
 import { isObject } from '@/utils/app'
 import { FilterItem, Obj } from '@/types'
 
@@ -23,7 +24,7 @@ provide('isEmptyValue', function isEmptyValue(value: object) {
 </script>
 
 <template>
-  <az-filter-input v-bind="{ internalValue }">
+  <filter-input v-bind="{ internalValue }">
     <div class="custom-input">
       <div
         v-for="item in filterItems.fruits"
@@ -61,7 +62,7 @@ provide('isEmptyValue', function isEmptyValue(value: object) {
         </label>
       </div>
     </div>
-  </az-filter-input>
+  </filter-input>
 </template>
 
 <style lang="scss" scoped>

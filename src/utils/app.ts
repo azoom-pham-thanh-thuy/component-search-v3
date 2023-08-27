@@ -4,6 +4,7 @@ import {
   isUndefined,
   isArray,
   isObject as _isObject,
+  isDate
 } from 'lodash'
 
 export function isObject(obj: any): boolean {
@@ -11,7 +12,7 @@ export function isObject(obj: any): boolean {
 }
 
 export function isEmptyValue(value: any): boolean {
-  if (isArray(value) || _isObject(value)) {
+  if (isArray(value) || (_isObject(value) && !isDate(value))) {
     return isEmpty(value)
   }
   return isNull(value) || isUndefined(value) || value === ''

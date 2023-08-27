@@ -74,7 +74,9 @@ provide('storeId', props.storeId)
         <applied-filter-values class="filter-values" />
         <pinned-filters class="pinned-filters" />
       </div>
-      <div class="control-area">
+      <div
+        :class="['control-area', { '-minimal-mode': settings.isMinimalMode }]"
+      >
         <div class="settings">
           <v-btn
             variant="outlined"
@@ -86,38 +88,38 @@ provide('storeId', props.storeId)
             }-horizontal`"
             @click="toggleCompactView"
           />
-          <v-btn
-            v-if="!settings.isMinimalMode"
-            icon="mdi-filter-variant"
-            variant="outlined"
-            density="comfortable"
-            color="primary"
-            class="button -filter"
-            @click="showFilters"
-          />
-          <v-btn
-            v-if="!settings.isMinimalMode"
-            icon="mdi-star"
-            variant="outlined"
-            density="comfortable"
-            color="primary"
-            class="button -bookmarks"
-            @click="showBookmarks"
-          />
-          <v-btn
-            v-if="!settings.isMinimalMode"
-            icon="mdi-history"
-            variant="outlined"
-            density="comfortable"
-            color="primary"
-            class="button -history"
-            @click="showHistory"
-          />
+          <template v-if="!settings.isMinimalMode">
+            <v-btn
+              icon="mdi-filter-variant"
+              variant="outlined"
+              density="comfortable"
+              color="primary"
+              class="button -filter"
+              @click="showFilters"
+            />
+            <v-btn
+              icon="mdi-star"
+              variant="outlined"
+              density="comfortable"
+              color="primary"
+              class="button -bookmarks"
+              @click="showBookmarks"
+            />
+            <v-btn
+              icon="mdi-history"
+              variant="outlined"
+              density="comfortable"
+              color="primary"
+              class="button -history"
+              @click="showHistory"
+            />
+          </template>
         </div>
         <div class="actions">
           <v-btn
             icon="mdi-delete"
             variant="text"
+            density="comfortable"
             color="primary"
             class="button -clear"
             :disabled="!canSearch"
@@ -125,6 +127,7 @@ provide('storeId', props.storeId)
           />
           <v-btn
             class="button -search"
+            density="default"
             color="primary"
             :disabled="!canSearch || runtime.searching"
             @click="callSearch"
@@ -181,17 +184,22 @@ provide('storeId', props.storeId)
   }
 }
 .control-area {
+  $btnsDistance: 6px;
   display: flex;
   flex-direction: column;
   margin-left: 3px;
+  &:not(.-minimal-mode) {
+    row-gap: 3px;
+  }
   @include screen-mobile {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    column-gap: $btnsDistance;
   }
   > .settings {
     display: flex;
-    column-gap: 6px;
+    column-gap: $btnsDistance;
   }
   > .settings > .button {
     border-radius: 5px;
@@ -205,19 +213,13 @@ provide('storeId', props.storeId)
   > .actions {
     display: flex;
     justify-content: space-between;
-    column-gap: 6px;
-    margin: 3px 0;
+    align-items: center;
+    column-gap: $btnsDistance;
   }
   > .actions > .button.-search {
     flex: 1;
     @include screen-mobile {
       min-width: 85px;
-    }
-  }
-  > .actions > .button.-clear {
-    --v-btn-height: 24px;
-    @include screen-mobile {
-      margin: 0 3px;
     }
   }
 }

@@ -81,13 +81,15 @@ function toggleAllCheck() {
     display: flex;
     flex-wrap: wrap;
     padding: 5px 0;
+    max-height: calc(100vh - 320px);
+    overflow-y: auto;
   }
 }
 .checkbox-container {
   box-sizing: border-box;
   position: relative;
   padding-left: 26px;
-  margin: 5px;
+  margin: 2px;
   cursor: pointer;
   user-select: none;
   @include screen-mobile {

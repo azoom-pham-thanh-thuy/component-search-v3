@@ -1,9 +1,6 @@
-import { createApp, type App } from 'vue'
-import vuetify from '@/plugins/vuetify'
 import AzSearchStore from '@/stores'
 import * as dateUtil from '@/utils/date'
 import { preset } from '@/utils/Preset'
-import AppComponent from '@/App.vue'
 import {
   AzSearch,
   FilterInput as AzFilterInput,
@@ -12,10 +9,16 @@ import {
 import useFilterInput from '@/composables/filter-input'
 import useFilterValue from '@/composables/filter-value'
 
-const app = createApp(AppComponent)
-app.use(vuetify)
-app.mount('#app')
+/** In the development environment, uncomment the lines below **/
+// import { createApp } from 'vue'
+// import vuetify from '@/plugins/vuetify'
+// import AppComponent from '@/App.vue'
 
+// const app = createApp(AppComponent)
+// app.use(vuetify)
+// app.mount('#app')
+
+export * from '@/types'
 export {
   AzSearch,
   AzFilterInput,
